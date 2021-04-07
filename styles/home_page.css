@@ -9,3 +9,10 @@ section h1 {
     text-align: center;
     font-size: 100px;
 }
+
+#products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
