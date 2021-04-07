@@ -58,12 +58,13 @@
     <title>Shopping cart</title>
     <link rel="stylesheet" href="../styles/reset.css">
     <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/home_page.css">
 </head>
 <body>
 <nav>
     <div id="logo-container">
         <!-- Logo goes here -->
-        <a href="home_page.php">Logo here</a>
+        <a href="./home_page.php">Logo here</a>
     </div>
 
     <div class="nav-container">
@@ -71,10 +72,14 @@
         <p>User first name</p>
 
         <!-- Display either login/logout -->
-        <a href="cart.php">Cart</a>
-        <a href="login.php">Login</a>
-        <a href="registration.php">Register</a>
+        <a href="./cart.php">Cart</a>
+        <a href="./login.php">Login</a>
+        <a href="./registration.php">Register</a>
     </div>
 </nav>
+
+<section>
+    <h1>This is the home page</h1>
+</section>
 </body>
 </html>
