@@ -57,7 +57,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping cart</title>
     <link rel="stylesheet" href="../styles/reset.css">
-    <link rel="stylesheet" href="../styles/home_page.css">
+    <link rel="stylesheet" href="../styles/header.css">
 </head>
 <body>
 <nav>
@@ -73,7 +73,7 @@
         <!-- Display either login/logout -->
         <a href="cart.php">Cart</a>
         <a href="login.php">Login</a>
-        <a href="register.php">Register</a>
+        <a href="registration.php">Register</a>
     </div>
 </nav>
 </body>
