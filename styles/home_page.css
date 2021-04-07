@@ -1,0 +1,23 @@
+nav {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+#logo-container {
+    margin-left: 20px;
+}
+
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 90vw;
+}
+
+.nav-container a {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+
