@@ -61,6 +61,16 @@
     <link rel="stylesheet" href="../styles/home_page.css">
 </head>
 <body>
+
+<?php
+require_once("../database/database.php");
+
+$pdo = connect();
+$sql = "SELECT * FROM products";
+$statement = $pdo->prepare($sql);
+$statement->execute();
+?>
+
 <nav>
     <div id="logo-container">
         <!-- Logo goes here -->
@@ -79,7 +89,23 @@
 </nav>
 
 <section>
-    <h1>This is the home page</h1>
+    <h1>Products available</h1>
+
+    <div id="products">
+        <?php
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            echo "<div>";
+            echo '<img src = "data:image/jpg;base64,' . base64_encode($row['product_thumbnail']) . '" width = "100px" height = "100px"/>';
+            echo '<h3>' . $row['product_name'] . '</h3>';
+            echo '<p>' . $row['product_description'] . '</p>';
+            echo '<p>' . $row['product_price'] . '</p>';
+            echo '<p' . $row['product_stock'] . '</p>';
+            echo '<button>Add to cart </button>';
+            echo "</div>";
+        }
+
+        ?>
+    </div>
 </section>
 </body>
 </html>
