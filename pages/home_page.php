@@ -63,7 +63,7 @@
 <nav>
     <div id="logo-container">
         <!-- Logo goes here -->
-        <p>Logo here</p>
+        <a href="home_page.php">Logo here</a>
     </div>
 
     <div class="nav-container">
