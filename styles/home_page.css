@@ -1,11 +1,21 @@
 nav {
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 20px;
+    background-color:#F3FCF0;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 #logo-container {
     margin-left: 20px;
+}
+
+a:visited, a {
+    text-decoration: none;
+    color: black;
 }
 
 .nav-container {
@@ -20,4 +30,7 @@ nav {
     margin-left: 20px;
 }
 
+.nav-container p {
+    margin-right: 20px;
+}
 

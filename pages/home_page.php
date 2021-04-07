@@ -71,6 +71,7 @@
         <p>User first name</p>
 
         <!-- Display either login/logout -->
+        <a href="cart.php">Cart</a>
         <a href="login.php">Login</a>
         <a href="register.php">Register</a>
     </div>
