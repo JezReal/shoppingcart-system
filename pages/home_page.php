@@ -101,9 +101,9 @@ $statement->execute();
             echo '<p>' . $row['product_price'] . '</p>';
             echo '<p' . $row['product_stock'] . '</p>';
 
+            //set the product id in the url using get
             echo '<form action="product_details.php" method="get">
-                    <input type="hidden" name="productID" value="'. $row["product_id"] .'">
-                    <button type="submit" name="addToCartButton">View Details</button>
+                    <button type="submit" name="viewDetailsButton" value="'. $row["product_id"] .'">View Details</button>
                   </form>';
             echo "</div>";
         }
