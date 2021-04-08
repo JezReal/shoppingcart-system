@@ -1,7 +1,6 @@
 <?php
 
 require_once("Authenticator.php");
-require_once("../session/session.php");
 
 session_start();
 $auth = new Authenticator();
