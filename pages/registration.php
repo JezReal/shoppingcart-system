@@ -1,3 +1,18 @@
+<?php
+
+session_start();
+
+function logout()
+{
+    unset($_SESSION["user_id"]);
+    header("Location: ./home_page.php");
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
+    logout();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,12 +34,22 @@
 
     <div class="nav-container">
         <!-- Display first name if user is logged in -->
-        <p>User first name</p>
+        <?php
+        if (isset($_SESSION["user_id"])) {
+            echo "<p>" . $_SESSION["user_id"] . "</p>";
+            ?>
 
-        <!-- Display either login/logout -->
-        <a href="./cart.php">Cart</a>
-        <a href="./login.php">Login</a>
-        <a href="./registration.php">Register</a>
+            <a href="./cart.php">Cart</a>
+
+            <form action="./home_page.php" method="post">
+                <button type="submit" name="logoutButton">Logout</button>
+            </form>
+            <?php
+        } else {
+            echo "<a href='./login.php'>Login</a>";
+            echo "<a href='./registration.php'>Register</a>";
+        }
+        ?>
     </div>
 </nav>
 
