@@ -64,7 +64,6 @@
 
 <?php
 require_once("../database/database.php");
-
 $pdo = connect();
 $sql = "SELECT * FROM products";
 $statement = $pdo->prepare($sql);
@@ -95,7 +94,7 @@ $statement->execute();
         <?php
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
             echo "<div>";
-            echo '<img src = "data:image/jpg;base64,' . base64_encode($row['product_thumbnail']) . '" width = "100px" height = "100px"/>';
+            echo '<img src = "data:image/jpeg;base64,' . base64_encode($row['product_thumbnail']) . '" width = "100px" height = "100px"/>';
             echo '<h3>' . $row['product_name'] . '</h3>';
             echo '<p>' . $row['product_description'] . '</p>';
             echo '<p>' . $row['product_price'] . '</p>';
@@ -105,7 +104,28 @@ $statement->execute();
             echo '<form action="product_details.php" method="get">
                     <button type="submit" name="viewDetailsButton" value="'. $row["product_id"] .'">View Details</button>
                   </form>';
+
+            echo '<form action="home_page.php" method="post">
+                    <button type="submit" name="addToCartButton" value="'. $row["product_id"] .'">Add to Cart</button>
+                  </form>';
             echo "</div>";
+
+        }
+
+        function func()
+        {
+            require_once("../database/database.php");
+
+            $pdo = connect();
+            $cartID=$_POST['addToCartButton'];
+            $insertToCart = "INSERT INTO carts(customer_id) VALUES ( '$cartID')";
+            $statement = $pdo->prepare($insertToCart);
+            $statement->execute();
+        }
+
+        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
+        {
+            func();
         }
 
         ?>
