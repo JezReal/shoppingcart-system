@@ -28,8 +28,6 @@
         </div>
     </nav>
 
-
-
     <?php
     require_once("../database/database.php");
 
@@ -37,9 +35,10 @@
     $selectedProductID=$_GET['viewDetailsButton'];
 
     $pdo = connect();
-    $sql = "SELECT product_id, product_name, product_description, product_price, product_stock, product_thumbnail, product_photo FROM products WHERE product_id='".$selectedProductID."'";
+    $sql = "SELECT product_id, product_name, product_description, product_price, product_stock, product_photo FROM products WHERE product_id='".$selectedProductID."'";
     $statement = $pdo->prepare($sql);
     $statement->execute();
+    echo "Product ID= ".$selectedProductID;
     ?>
 
     <section>
@@ -49,7 +48,7 @@
             <?php
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div>";
-                echo '<img src = "data:image/jpeg;base64,' . base64_encode($row['product_thumbnail']) . '"/>';
+                echo '<img src = "'.$row['product_photo'].'"/>';
                 echo '<h3>' . $row['product_name'] . '</h3>';
                 echo '<p>' . $row['product_description'] . '</p>';
                 echo '<p>' . $row['product_price'] . '</p>';
