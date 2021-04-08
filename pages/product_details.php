@@ -26,7 +26,7 @@
             <?php
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                 echo "<div>";
-                echo '<img src = "data:image/jpg;base64,' . base64_encode($row['product_thumbnail']) . '" width = "100px" height = "100px"/>';
+                echo '<img src = "data:image/jpeg;base64,' . base64_encode($row['product_thumbnail]']) . '"/>';
                 echo '<h3>' . $row['product_name'] . '</h3>';
                 echo '<p>' . $row['product_description'] . '</p>';
                 echo '<p>' . $row['product_price'] . '</p>';
