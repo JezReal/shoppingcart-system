@@ -1,3 +1,19 @@
+<?php
+
+require_once("../session/session.php");
+session_start();
+
+function logout()
+{
+    unset($_SESSION["user_id"]);
+    header("Location: ../authentication/success.php");
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
+    logout();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,17 +49,26 @@ $statement->execute();
         <a href="./cart.php">Cart</a>
         <a href="./login.php">Login</a>
         <a href="./registration.php">Register</a>
+        <form action="./home_page.php" method="post">
+            <!--            <a href="./home_page.php" onclick="">Logout</a>-->
+            <button type="submit" name="logoutButton">Logout</button>
+        </form>
     </div>
 </nav>
 
 <section>
+    <?php
+    echo "<p>";
+    var_dump($_SESSION["user_id"]);
+    echo "</p>";
+    ?>
     <h1>Products available</h1>
 
     <div id="products">
         <?php
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
             echo "<div>";
-            echo '<img src = "'.$row['product_thumbnail'].'"width = "100px" height = "100px"/>';
+            echo '<img src = "' . $row['product_thumbnail'] . '"width = "100px" height = "100px"/>';
             echo '<h3>' . $row['product_name'] . '</h3>';
             echo '<p>' . $row['product_description'] . '</p>';
             echo '<p>' . $row['product_price'] . '</p>';
@@ -51,11 +76,11 @@ $statement->execute();
 
             //set the product id in the url using get
             echo '<form action="product_details.php" method="get">
-                    <button type="submit" name="viewDetailsButton" value="'. $row["product_id"] .'">View Details</button>
+                    <button type="submit" name="viewDetailsButton" value="' . $row["product_id"] . '">View Details</button>
                   </form>';
 
             echo '<form action="home_page.php" method="post">
-                    <button type="submit" name="addToCartButton" value="'. $row["product_id"] .'">Add to Cart</button>
+                    <button type="submit" name="addToCartButton" value="' . $row["product_id"] . '">Add to Cart</button>
                   </form>';
             echo "</div>";
         }
@@ -65,14 +90,13 @@ $statement->execute();
             require_once("../database/database.php");
 
             $pdo = connect();
-            $cartID=$_POST['addToCartButton'];
+            $cartID = $_POST['addToCartButton'];
             $insertToCart = "INSERT INTO carts(customer_id) VALUES ( '$cartID')";
             $statement = $pdo->prepare($insertToCart);
             $statement->execute();
         }
 
-        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
-        {
+        if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
             func();
         }
         ?>
