@@ -100,7 +100,11 @@ $statement->execute();
             echo '<p>' . $row['product_description'] . '</p>';
             echo '<p>' . $row['product_price'] . '</p>';
             echo '<p' . $row['product_stock'] . '</p>';
-            echo '<button>Add to cart </button>';
+
+            echo '<form action="product_details.php" method="get">
+                    <input type="hidden" name="productID" value="'. $row["product_id"] .'">
+                    <button type="submit" name="addToCartButton">View Details</button>
+                  </form>';
             echo "</div>";
         }
 
