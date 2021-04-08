@@ -29,7 +29,7 @@
 </nav>
 
 <section>
-    <form action="auth.php" method="POST">
+    <form action="../authentication/auth.php" method="POST">
         <label for="email">Email</label>
         <br>
         <input type="email" name="email" id="email" required>
@@ -40,7 +40,7 @@
         <input type="password" name="password" id="password" required>
         <br>
 
-        <button type="submit">Login</button>
+        <input type="submit" name="loginButton" value="Submit"/>
     </form>
 </section>
 </body>
