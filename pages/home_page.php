@@ -62,11 +62,6 @@ $statement->execute();
 </nav>
 
 <section>
-    <?php
-    echo "<p>";
-    var_dump($_SESSION["user_id"]);
-    echo "</p>";
-    ?>
     <h1>Products available</h1>
 
     <div id="products">
