@@ -45,15 +45,15 @@ $statement->execute();
         <?php
         if (isset($_SESSION["user_id"])) {
             echo "<p>" . $_SESSION["user_id"] . "</p>";
-        ?>
+            ?>
 
-    <a href="./cart.php">Cart</a>
+            <a href="./cart.php">Cart</a>
 
-    <form action="./home_page.php" method="post">
-        <button type="submit" name="logoutButton">Logout</button>
-    </form>
-    <?php
-        } else  {
+            <form action="./home_page.php" method="post">
+                <button type="submit" name="logoutButton">Logout</button>
+            </form>
+            <?php
+        } else {
             echo "<a href='./login.php'>Login</a>";
             echo "<a href='./registration.php'>Register</a>";
         }
@@ -79,9 +79,11 @@ $statement->execute();
                     <button type="submit" name="viewDetailsButton" value="' . $row["product_id"] . '">View Details</button>
                   </form>';
 
-            echo '<form action="home_page.php" method="post">
+            if (isset($_SESSION["user_id"])) {
+                echo '<form action="home_page.php" method="post">
                     <button type="submit" name="addToCartButton" value="' . $row["product_id"] . '">Add to Cart</button>
                   </form>';
+            }
             echo "</div>";
         }
 
