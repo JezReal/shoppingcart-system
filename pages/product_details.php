@@ -2,13 +2,25 @@
 
 session_start();
 
+function logout()
+{
+    unset($_SESSION['activeUserFirstName']);
+    unset($_SESSION["user_id"]);
+    header("Location: ./product_details.php");
+
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
+    logout();
+}
+
 function func()
 {
     require_once("../database/database.php");
 
     //trial query only
     $pdo = connect();
-    $cartID=$_POST['addToCartButton'];
+    $cartID=$_SESSION['selectedItemID'];
     $insertToCart = "INSERT INTO carts(customer_id) VALUES ( '$cartID')";
     $statement = $pdo->prepare($insertToCart);
     $statement->execute();
@@ -48,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
 
                 <a href="./cart.php">Cart</a>
 
-                <form action="./home_page.php" method="post">
+                <form action="./product_details.php" method="post">
                     <button type="submit" name="logoutButton">Logout</button>
                 </form>
                 <?php
@@ -64,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
     require_once("../database/database.php");
 
     //Get the product id in the url
-    $selectedProductID=$_GET['viewDetailsButton'];
+    $selectedProductID=$cartID=$_SESSION['selectedItemID'];
 
     $pdo = connect();
     $sql = "SELECT product_id, product_name, product_description, product_price, product_stock, product_photo FROM products WHERE product_id='".$selectedProductID."'";
@@ -87,7 +99,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
                 echo '<p' . $row['product_stock'] . '</p>';
 
                 //set the product id in the url using get
-                echo '<form action="product_details.php" method="post">
+                echo '<form action="store_selected_item.php" method="post">
                     <input type="text" name="quantityField" value="1">
                     <button type="submit" name="addToCartButton" value="'. $row["product_id"] .'">Add to Cart</button>
                   </form>';
@@ -98,8 +110,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
 
         </div>
     </section>
-
-
 
 </body>
 </html>
