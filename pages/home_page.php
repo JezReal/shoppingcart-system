@@ -76,7 +76,6 @@ function insertToCartItems($cartID, $productID, $quantity){
     $statement->execute();
 }
 
-
 function getCartItemId($userID){
 
     $result='';
@@ -115,7 +114,6 @@ function getCartID($userID){
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
         $result=$row['cart_id'];
     }
-
     return $result;
 }
 
@@ -141,7 +139,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
     }
 
     header('location: cart.php');
-
 }
 ?>
 

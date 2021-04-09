@@ -144,6 +144,7 @@ if(isset($_SESSION['user_id'])){
         header('location: cart.php');
     }
 }
+
 ?>
 
 <!DOCTYPE html>
