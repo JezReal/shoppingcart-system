@@ -4,8 +4,6 @@ require_once("../authentication/auth_status.php");
 
 session_start();
 
-$GLOBALS["login_error_message"] = "";
-
 function logout()
 {
     unset($_SESSION["user_id"]);
@@ -14,11 +12,6 @@ function logout()
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     logout();
-}
-
-function loginError()
-{
-   $GLOBALS["login_error_message"] = "Invalid credentials!";
 }
 
 ?>
@@ -43,7 +36,6 @@ function loginError()
     </div>
 
     <div class="nav-container">
-        <!-- Display first name if user is logged in -->
         <?php
 
         require_once("../authentication/Authenticator.php");
@@ -68,8 +60,10 @@ function loginError()
 
 <section>
     <?php
-    if ($GLOBALS["login_error_message"] != "") {
-        echo "<p>Invalid credentials</p>";
+    if (isset($_SESSION["login_error_message"])) {
+        echo "<div id='error-message'>";
+        echo "<p> Invalid credentials </p>";
+        echo "</div>";
     }
     ?>
     <form action="../authentication/auth.php" method="POST">
@@ -81,7 +75,7 @@ function loginError()
         <br>
         <input type="password" name="password" id="password" required>
         <br>
-        <input type="submit" name="loginButton" value="Submit"/>
+        <input type="submit" name="loginButton" value="Log in"/>
     </form>
 </section>
 </body>

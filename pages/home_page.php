@@ -2,6 +2,8 @@
 
 session_start();
 
+unset($_SESSION["login_error_message"]);
+
 function logout()
 {
     unset($_SESSION['activeUserFirstName']);
