@@ -1,6 +1,10 @@
 <?php
 
+require_once("../authentication/auth_status.php");
+
 session_start();
+
+$GLOBALS["errorMessage"] = "";
 
 function logout()
 {
@@ -10,6 +14,10 @@ function logout()
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     logout();
+}
+
+function loginError() {
+    $GLOBALS["errorMessage"] = loginInvalidCredentials();
 }
 ?>
 
@@ -54,6 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 </nav>
 
 <section>
+    <?php
+    if ($GLOBALS["errorMessage"] != "") {
+        echo "<p>Invalid credentials</p>";
+    }
+    ?>
     <form action="../authentication/auth.php" method="POST">
         <label for="email">Email</label>
         <br>
