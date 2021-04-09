@@ -4,7 +4,7 @@ require_once("../authentication/auth_status.php");
 
 session_start();
 
-$GLOBALS["errorMessage"] = "";
+$GLOBALS["login_error_message"] = "";
 
 function logout()
 {
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
 function loginError()
 {
-    $GLOBALS["errorMessage"] = loginInvalidCredentials();
+   $GLOBALS["login_error_message"] = "Invalid credentials!";
 }
 
 ?>
@@ -68,7 +68,7 @@ function loginError()
 
 <section>
     <?php
-    if ($GLOBALS["errorMessage"] != "") {
+    if ($GLOBALS["login_error_message"] != "") {
         echo "<p>Invalid credentials</p>";
     }
     ?>
