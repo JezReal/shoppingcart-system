@@ -4,6 +4,9 @@ require_once("../authentication/auth_status.php");
 
 session_start();
 
+unset($_SESSION["emailExists"]);
+unset($_SESSION["passwordMismatch"]);
+
 function logout()
 {
     unset($_SESSION["user_id"]);

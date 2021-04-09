@@ -60,6 +60,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
 
 <section>
+    <?php
+    if (isset($_SESSION["emailExists"])) {
+        echo "<p>Email already exists!</p>";
+    }
+
+    if (isset($_SESSION["passwordMismatch"])) {
+        echo "<p>Password does not match!</p>";
+    }
+
+    ?>
     <form action="../authentication/auth.php" method="POST">
         <label for="firstName">First name</label>
         <br>
@@ -86,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
         <input type="password" name="confirmPassword" id="confirmPassword" required>
         <br>
 
-        <input type="button" name="registerButton" value="Register"/>
+        <input type="submit" name="registerButton" value="Register"/>
     </form>
 </section>
 </body>
