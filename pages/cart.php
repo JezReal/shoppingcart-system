@@ -25,32 +25,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     <link rel="stylesheet" href="../styles/cart.css">
 </head>
 <body>
-<nav>
-    <div id="logo-container">
-        <!-- Logo goes here -->
-        <a href="./home_page.php">Logo here</a>
-    </div>
+    <nav>
+        <div id="logo-container">
+            <!-- Logo goes here -->
+            <a href="./home_page.php">Logo here</a>
+        </div>
 
-    <div class="nav-container">
-        <!-- Display first name if user is logged in -->
-        <?php
-        if (isset($_SESSION["user_id"])) {
-            echo "<p>" . $_SESSION["user_id"] . "</p>";
-            ?>
-
-            <a href="./cart.php">Cart</a>
-
-            <form action="./home_page.php" method="post">
-                <button type="submit" name="logoutButton">Logout</button>
-            </form>
+        <div class="nav-container">
+            <!-- Display first name if user is logged in -->
             <?php
-        } else {
-            echo "<a href='./login.php'>Login</a>";
-            echo "<a href='./registration.php'>Register</a>";
-        }
-        ?>
-    </div>
-</nav>
+            if (isset($_SESSION['activeUserFirstName'])) {
+                echo "<p>" . $_SESSION['activeUserFirstName'] . "</p>";
+                ?>
+
+                <form action="./home_page.php" method="post">
+                    <button type="submit" name="logoutButton">Logout</button>
+                </form>
+                <?php
+            } else {
+                echo "<a href='./login.php'>Login</a>";
+                echo "<a href='./registration.php'>Register</a>";
+            }
+            ?>
+        </div>
+    </nav>
 
 <section>
     <h1>This is the cart page</h1>

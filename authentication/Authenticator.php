@@ -2,7 +2,6 @@
 require_once "../database/database.php";
 class Authenticator {
 
-
     public function login($email, $password) {
         $database = connect();
 

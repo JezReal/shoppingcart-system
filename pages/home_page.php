@@ -4,8 +4,10 @@ session_start();
 
 function logout()
 {
+    unset($_SESSION['activeUserFirstName']);
     unset($_SESSION["user_id"]);
     header("Location: ./home_page.php");
+
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
@@ -43,8 +45,8 @@ $statement->execute();
     <div class="nav-container">
         <!-- Display first name if user is logged in -->
         <?php
-        if (isset($_SESSION["user_id"])) {
-            echo "<p>" . $_SESSION["user_id"] . "</p>";
+        if (isset($_SESSION['activeUserFirstName'])) {
+            echo "<p>" . $_SESSION['activeUserFirstName'] . "</p>";
             ?>
 
             <a href="./cart.php">Cart</a>

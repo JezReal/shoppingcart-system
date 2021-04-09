@@ -15,8 +15,8 @@ $user_id = $auth->login($email, $password);
 if ($_POST["loginButton"]) {
     if ($user_id > 0) {
         $_SESSION["user_id"] = $user_id;
-        header("Location: ../pages/home_page.php");
-//        header("Location: success.php");
+        //header("Location: ../pages/home_page.php");
+        header("Location: success.php");
     } else {
         header("Location: ./failure.php");
     }

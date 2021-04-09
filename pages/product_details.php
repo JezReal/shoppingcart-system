@@ -1,3 +1,25 @@
+<?php
+
+session_start();
+
+function func()
+{
+    require_once("../database/database.php");
+
+    //trial query only
+    $pdo = connect();
+    $cartID=$_POST['addToCartButton'];
+    $insertToCart = "INSERT INTO carts(customer_id) VALUES ( '$cartID')";
+    $statement = $pdo->prepare($insertToCart);
+    $statement->execute();
+}
+
+if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
+{
+    func();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,12 +41,22 @@
 
         <div class="nav-container">
             <!-- Display first name if user is logged in -->
-            <p>User first name</p>
+            <?php
+            if (isset($_SESSION['activeUserFirstName'])) {
+                echo "<p>" . $_SESSION['activeUserFirstName'] . "</p>";
+                ?>
 
-            <!-- Display either login/logout -->
-            <a href="./cart.php">Cart</a>
-            <a href="./login.php">Login</a>
-            <a href="./registration.php">Register</a>
+                <a href="./cart.php">Cart</a>
+
+                <form action="./home_page.php" method="post">
+                    <button type="submit" name="logoutButton">Logout</button>
+                </form>
+                <?php
+            } else {
+                echo "<a href='./login.php'>Login</a>";
+                echo "<a href='./registration.php'>Register</a>";
+            }
+            ?>
         </div>
     </nav>
 
@@ -56,30 +88,14 @@
 
                 //set the product id in the url using get
                 echo '<form action="product_details.php" method="post">
+                    <input type="text" name="quantityField" value="1">
                     <button type="submit" name="addToCartButton" value="'. $row["product_id"] .'">Add to Cart</button>
                   </form>';
                 echo "</div>";
             }
             ?>
 
-            <?php
-                function func()
-                {
-                    require_once("../database/database.php");
 
-                    //trial query only
-                    $pdo = connect();
-                    $cartID=$_POST['addToCartButton'];
-                    $insertToCart = "INSERT INTO carts(customer_id) VALUES ( '$cartID')";
-                    $statement = $pdo->prepare($insertToCart);
-                    $statement->execute();
-                }
-
-                if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
-                {
-                    func();
-                }
-            ?>
         </div>
     </section>
 
