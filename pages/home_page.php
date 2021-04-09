@@ -94,11 +94,11 @@ function getCartItemId($userID){
     return $result;
 }
 
-function editItemQuantity($quantity, $cartItemID){
+function editItemQuantity($quantity, $productID){
     require_once("../database/database.php");
 
     $pdo = connect();
-    $editItemQuantity = "UPDATE cart_items SET quantity = quantity + '$quantity' WHERE cart_item_id = '$cartItemID';";
+    $editItemQuantity = "UPDATE cart_items SET quantity = quantity + '$quantity' WHERE product_id = '$productID'";
     $statement = $pdo->prepare($editItemQuantity);
     $statement->execute();
 }
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
     if(customerHasCart($userID)){
 
         if(cartItemExist($userID)){
-            editItemQuantity(1,$cartItemID);
+            editItemQuantity(1,$productID);
         }else{
             insertToCartItems($cartID,$productID,1);
         }
