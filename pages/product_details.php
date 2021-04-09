@@ -14,21 +14,135 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     logout();
 }
 
-function func()
-{
-    require_once("../database/database.php");
+if(isset($_SESSION['user_id'])){
+    function addCart($userID)
+    {
+        require_once("../database/database.php");
 
-    //trial query only
-    $pdo = connect();
-    $cartID=$_SESSION['selectedItemID'];
-    $insertToCart = "INSERT INTO carts(customer_id) VALUES ( '$cartID')";
-    $statement = $pdo->prepare($insertToCart);
-    $statement->execute();
-}
+        $pdo = connect();
+        $insertToCart = "INSERT INTO carts(customer_id) VALUES ('$userID')";
+        $statement = $pdo->prepare($insertToCart);
+        $statement->execute();
+    }
 
-if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
-{
-    func();
+    function customerHasCart($userID){
+        require_once("../database/database.php");
+
+        $pdo = connect();
+        $check_duplicates = "SELECT * FROM carts WHERE customer_id = '".$userID."' LIMIT 1";
+        $statement1 = $pdo->prepare($check_duplicates);
+        $statement1->execute();
+        $res = $statement1->fetch(PDO::FETCH_ASSOC);
+
+        if($res){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function cartItemExist($userID){
+        require_once("../database/database.php");
+
+        $productID=$_POST['addToCartButton'];
+
+        $pdo = connect();
+        $check_duplicates = "SELECT * FROM cart_items WHERE product_id = '".$productID."' LIMIT 1";
+        $statement1 = $pdo->prepare($check_duplicates);
+        $statement1->execute();
+        $res = $statement1->fetch(PDO::FETCH_ASSOC);
+
+        if($res){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function insertToCarts($userID){
+        require_once("../database/database.php");
+
+        $pdo = connect();
+        $insertToCart = "INSERT INTO carts(customer_id) VALUES ('$userID')";
+        $statement = $pdo->prepare($insertToCart);
+        $statement->execute();
+    }
+
+    function insertToCartItems($cartID, $productID, $quantity){
+        require_once("../database/database.php");
+
+        $pdo = connect();
+        $insertToCartItems = "INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ('$cartID','$productID','$quantity')";
+        $statement = $pdo->prepare($insertToCartItems);
+        $statement->execute();
+    }
+
+
+    function getCartItemId($userID){
+
+        $result='';
+
+        require_once("../database/database.php");
+
+        $pdo = connect();
+        $insertToCartItems = "SELECT cart_item_id FROM cart_items WHERE cart_id='$userID'";
+        $statement = $pdo->prepare($insertToCartItems);
+        $statement->execute();
+
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $result=$row['cart_item_id'];
+        }
+        return $result;
+    }
+
+    function editItemQuantity($quantity, $productID){
+        require_once("../database/database.php");
+
+        $pdo = connect();
+        $editItemQuantity = "UPDATE cart_items SET quantity = quantity + '$quantity' WHERE product_id = '$productID'";
+        $statement = $pdo->prepare($editItemQuantity);
+        $statement->execute();
+    }
+
+    function getCartID($userID){
+        $result='';
+        require_once("../database/database.php");
+
+        $pdo = connect();
+        $insertToCartItems = "SELECT cart_id FROM carts WHERE customer_id='$userID'";
+        $statement = $pdo->prepare($insertToCartItems);
+        $statement->execute();
+
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $result=$row['cart_id'];
+        }
+
+        return $result;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
+
+        $productQuantity=$_POST['quantityField'];
+        $userID=$_SESSION['user_id'];
+        $productID=$_POST['addToCartButton'];
+        $cartID=getCartID($userID);
+        $cartItemID=getCartItemId($userID);
+
+
+        if(customerHasCart($userID)){
+
+            if(cartItemExist($userID)){
+                editItemQuantity($productQuantity,$productID);
+            }else{
+                insertToCartItems($cartID,$productID,1);
+            }
+
+        }else{
+            insertToCarts($userID);
+            insertToCartItems($cartID,$productID,1);
+        }
+        header('location: cart.php');
+    }
 }
 ?>
 
@@ -76,7 +190,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
     require_once("../database/database.php");
 
     //Get the product id in the url
-    $selectedProductID=$cartID=$_SESSION['selectedItemID'];
+    $selectedProductID=$_POST['viewDetailsButton'];
 
     $pdo = connect();
     $sql = "SELECT product_id, product_name, product_description, product_price, product_stock, product_photo FROM products WHERE product_id='".$selectedProductID."'";
@@ -99,7 +213,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']))
                 echo '<p' . $row['product_stock'] . '</p>';
 
                 //set the product id in the url using get
-                echo '<form action="store_selected_item.php" method="post">
+                echo '<form action="product_details.php" method="post">
                     <input type="text" name="quantityField" value="1">
                     <button type="submit" name="addToCartButton" value="'. $row["product_id"] .'">Add to Cart</button>
                   </form>';

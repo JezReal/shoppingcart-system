@@ -192,6 +192,7 @@ $statement->execute();
             echo "<a href='./login.php'>Login</a>";
             echo "<a href='./registration.php'>Register</a>";
         }
+
         ?>
     </div>
 </nav>
@@ -210,7 +211,7 @@ $statement->execute();
             echo '<p' . $row['product_stock'] . '</p>';
 
             //set the product id in the url using get
-            echo '<form action="product_details.php" method="get">
+            echo '<form action="product_details.php" method="post">
                     <button type="submit" name="viewDetailsButton" value="' . $row["product_id"] . '">View Details</button>
                   </form>';
 
