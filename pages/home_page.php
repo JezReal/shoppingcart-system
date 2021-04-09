@@ -45,8 +45,11 @@ $statement->execute();
     <div class="nav-container">
         <!-- Display first name if user is logged in -->
         <?php
-        if (isset($_SESSION['activeUserFirstName'])) {
-            echo "<p>" . $_SESSION['activeUserFirstName'] . "</p>";
+
+        require_once("../authentication/Authenticator.php");
+        if (isset($_SESSION["user_id"])) {
+            $firstname = Authenticator::getLoggedInUserFirstname($_SESSION["user_id"]);
+            echo "<p>" . $firstname . "</p>";
             ?>
 
             <a href="./cart.php">Cart</a>

@@ -16,9 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     logout();
 }
 
-function loginError() {
+function loginError()
+{
     $GLOBALS["errorMessage"] = loginInvalidCredentials();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -43,8 +45,11 @@ function loginError() {
     <div class="nav-container">
         <!-- Display first name if user is logged in -->
         <?php
+
+        require_once("../authentication/Authenticator.php");
         if (isset($_SESSION["user_id"])) {
-            echo "<p>" . $_SESSION["user_id"] . "</p>";
+            $firstname = Authenticator::getLoggedInUserFirstname($_SESSION["user_id"]);
+            echo "<p>" . $firstname . "</p>";
             ?>
 
             <a href="./cart.php">Cart</a>
