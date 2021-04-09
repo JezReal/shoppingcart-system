@@ -72,12 +72,10 @@ function loginError() {
         <br>
         <input type="email" name="email" id="email" required>
         <br>
-
         <label for="password">Password</label>
         <br>
         <input type="password" name="password" id="password" required>
         <br>
-
         <input type="submit" name="loginButton" value="Submit"/>
     </form>
 </section>

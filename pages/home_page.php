@@ -4,8 +4,10 @@ session_start();
 
 function logout()
 {
+    unset($_SESSION['activeUserFirstName']);
     unset($_SESSION["user_id"]);
     header("Location: ./home_page.php");
+
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
@@ -43,8 +45,8 @@ $statement->execute();
     <div class="nav-container">
         <!-- Display first name if user is logged in -->
         <?php
-        if (isset($_SESSION["user_id"])) {
-            echo "<p>" . $_SESSION["user_id"] . "</p>";
+        if (isset($_SESSION['activeUserFirstName'])) {
+            echo "<p>" . $_SESSION['activeUserFirstName'] . "</p>";
             ?>
 
             <a href="./cart.php">Cart</a>
@@ -80,7 +82,7 @@ $statement->execute();
                   </form>';
 
             if (isset($_SESSION["user_id"])) {
-                echo '<form action="home_page.php" method="post">
+                echo '<form action="product_details.php" method="post">
                     <button type="submit" name="addToCartButton" value="' . $row["product_id"] . '">Add to Cart</button>
                   </form>';
             }
@@ -93,9 +95,10 @@ $statement->execute();
 
             $pdo = connect();
             $cartID = $_POST['addToCartButton'];
-            $insertToCart = "INSERT INTO carts(customer_id) VALUES ( '$cartID')";
+            $insertToCart = "INSERT INTO carts(customer_id) VALUES ('$cartID')";
             $statement = $pdo->prepare($insertToCart);
             $statement->execute();
+
         }
 
         if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
