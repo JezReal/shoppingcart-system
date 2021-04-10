@@ -2,6 +2,8 @@
 
 session_start();
 
+unset($_SESSION["login_error_message"]);
+
 function logout()
 {
     unset($_SESSION["user_id"]);
@@ -58,7 +60,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
 
 <section>
-    <form action="auth.php" method="POST">
+    <?php
+    if (isset($_SESSION["emailExists"])) {
+        echo "<p>Email already exists!</p>";
+    }
+
+    if (isset($_SESSION["passwordMismatch"])) {
+        echo "<p>Password does not match!</p>";
+    }
+
+    ?>
+    <form action="../authentication/auth.php" method="POST">
         <label for="firstName">First name</label>
         <br>
         <input type="text" name="firstName" id="firstName" required>
@@ -84,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
         <input type="password" name="confirmPassword" id="confirmPassword" required>
         <br>
 
-        <button type="submit">Sign up</button>
+        <input type="submit" name="registerButton" value="Register"/>
     </form>
 </section>
 </body>

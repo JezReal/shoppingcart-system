@@ -2,6 +2,10 @@
 
 session_start();
 
+unset($_SESSION["login_error_message"]);
+unset($_SESSION["emailExists"]);
+unset($_SESSION["passwordMismatch"]);
+
 function logout()
 {
     unset($_SESSION['activeUserFirstName']);
