@@ -13,7 +13,6 @@ $statement->execute();
 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
     $_SESSION['activeUserFirstName']=$row['first_name'];
 }
-var_dump($_SESSION["user_id"]);
 
 header("Location: ../pages/home_page.php");
 echo "</h1>";

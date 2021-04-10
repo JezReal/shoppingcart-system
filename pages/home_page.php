@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 unset($_SESSION["login_error_message"]);
@@ -126,22 +125,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
     $userID=$_SESSION['user_id'];
     $productID=$_POST['addToCartButton'];
     $cartID=getCartID($userID);
+    $_SESSION['cartID']=$cartID;
     $cartItemID=getCartItemId($userID);
 
-
     if(customerHasCart($userID)){
-
         if(cartItemExist($userID)){
             editItemQuantity(1,$productID);
         }else{
             insertToCartItems($cartID,$productID,1);
         }
-
     }else{
         insertToCarts($userID);
+        $cartID=getCartID($userID);
         insertToCartItems($cartID,$productID,1);
     }
-
     header('location: cart.php');
 }
 ?>
