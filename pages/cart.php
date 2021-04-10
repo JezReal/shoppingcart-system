@@ -56,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 </nav>
 
     <?php
+
     require_once("../database/database.php");
     $costumerID=$_SESSION["user_id"];
 
@@ -89,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
             </tr>
 
                 <?php
+
                 $totalPrice=0;
                 $totalQuantity=0;
 
@@ -103,8 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
                     echo'<tr>';
                     echo'<td class="item_column"><img id="thumbnailHolder" src = "' . $row['product_thumbnail'] . '"width = "50px" height = "50px">'. $row['product_name'] .'</td>';
                     echo'<td class="info_column">'.$quantity.'</td>';
-                    echo'<td class="info_column">'.$unitPrice.'</td>';
-                    echo'<td class="info_column">'.$price.'</td>';
+                    echo'<td class="info_column">'."₱ ".number_format($unitPrice, 2).'</td>';
+                    echo'<td class="info_column">'."₱ ".number_format($price, 2).'</td>';
                     echo'<td class="remove_button">
                              <form>
                              <button class="delete_button" type="submit" name="deleteFromCartButton" value="'.$row['product_id'].'"><img src="../icons/remove%20icon.png"></button>
@@ -119,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
                 <td class="total_column">total</td>
                 <td class="info_column"><?php echo $totalQuantity?></td>
                 <td class="info_column"></td>
-                <td class="info_column"><?php echo $totalPrice?></td>
+                <td class="info_column"><?php echo "₱ ".number_format($totalPrice, 2) ?></td>
                 <td class="info_column"></td>
             </tr>
 

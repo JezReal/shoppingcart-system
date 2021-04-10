@@ -10,7 +10,6 @@ function logout()
     unset($_SESSION['activeUserFirstName']);
     unset($_SESSION["user_id"]);
     header("Location: ./home_page.php");
-
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
@@ -43,13 +42,13 @@ function customerHasCart($userID){
     }
 }
 
-function cartItemExist($userID){
+function cartItemExist($costumerID, $productID){
     require_once("../database/database.php");
 
-    $productID=$_POST['addToCartButton'];
-
     $pdo = connect();
-    $check_duplicates = "SELECT * FROM cart_items WHERE product_id = '".$productID."' LIMIT 1";
+    $check_duplicates = "SELECT cart_items.product_id FROM cart_items
+                        JOIN carts ON cart_items.cart_id = carts.cart_id
+                        WHERE cart_items.product_id = '$productID' AND carts.customer_id='$costumerID'";
     $statement1 = $pdo->prepare($check_duplicates);
     $statement1->execute();
     $res = $statement1->fetch(PDO::FETCH_ASSOC);
@@ -96,11 +95,13 @@ function getCartItemId($userID){
     return $result;
 }
 
-function editItemQuantity($quantity, $productID){
+function editItemQuantity($quantity, $productID, $costumerID){
     require_once("../database/database.php");
 
     $pdo = connect();
-    $editItemQuantity = "UPDATE cart_items SET quantity = quantity + '$quantity' WHERE product_id = '$productID'";
+    $editItemQuantity = "UPDATE cart_items
+                        JOIN carts ON cart_items.cart_id=carts.cart_id
+                        SET quantity = quantity + '$quantity' WHERE cart_items.product_id = '$productID' AND carts.customer_id='$costumerID'";
     $statement = $pdo->prepare($editItemQuantity);
     $statement->execute();
 }
@@ -122,15 +123,17 @@ function getCartID($userID){
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
 
+    $quantity=
     $userID=$_SESSION['user_id'];
     $productID=$_POST['addToCartButton'];
     $cartID=getCartID($userID);
     $_SESSION['cartID']=$cartID;
     $cartItemID=getCartItemId($userID);
 
+
     if(customerHasCart($userID)){
-        if(cartItemExist($userID)){
-            editItemQuantity(1,$productID);
+        if(cartItemExist($userID, $productID)){
+            editItemQuantity(1,$productID,$userID);
         }else{
             insertToCartItems($cartID,$productID,1);
         }
@@ -205,7 +208,7 @@ $statement->execute();
             echo '<img src = "' . $row['product_thumbnail'] . '"width = "100px" height = "100px"/>';
             echo '<h3>' . $row['product_name'] . '</h3>';
             echo '<p>' . $row['product_description'] . '</p>';
-            echo '<p>' . $row['product_price'] . '</p>';
+            echo '<p>' . "₱ ".number_format($row['product_price'], 2) . '</p>';
             echo '<p' . $row['product_stock'] . '</p>';
 
             //set the product id in the url using get
