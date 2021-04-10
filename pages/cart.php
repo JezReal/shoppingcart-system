@@ -77,11 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
         <table style="width:100%">
             <tr>
-                <th id="item_holder">Item</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Price</th>
-                <th>Remove</th>
+                <th class="header_info">Item</th>
+                <th class="header_info">Quantity</th>
+                <th class="header_info">Unit Price</th>
+                <th class="header_info">Price</th>
+                <th class="header_info">Action</th>
 
             </tr>
 
@@ -98,13 +98,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
                     $totalQuantity+=$quantity;
 
                     echo'<tr>';
-                    echo'<td><div id="itemHolder"><img id="thumbnailHolder" src = "' . $row['product_thumbnail'] . '"width = "50px" height = "50px"/><p>'. $row['product_name'] .'</p></div></td>';
-                    echo'<td>'.$quantity.'</td>';
-                    echo'<td>'.$unitPrice.'</td>';
-                    echo'<td>'.$price.'</td>';
-                    echo'<td>
+                    echo'<td class="item_column"><img id="thumbnailHolder" src = "' . $row['product_thumbnail'] . '"width = "50px" height = "50px">'. $row['product_name'] .'</td>';
+                    echo'<td class="info_column">'.$quantity.'</td>';
+                    echo'<td class="info_column">'.$unitPrice.'</td>';
+                    echo'<td class="info_column">'.$price.'</td>';
+                    echo'<td class="remove_button">
                              <form>
-                             <button type="submit" name="deleteFromCartButton" value="'.$row['product_id'].'">Delete</button>
+                             <button class="delete_button" type="submit" name="deleteFromCartButton" value="'.$row['product_id'].'"><img src="../icons/remove%20icon.png"></button>
                              </form>
                          </td>';
                     echo' </tr>';
@@ -112,11 +112,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
                 ?>
 
             <tr>
-                <td>total</td>
-                <td><?php echo $totalQuantity?></td>
-                <td></td>
-                <td><?php echo $totalPrice?></td>
-                <td></td>
+
+                <td class="total_column">total</td>
+                <td class="info_column"><?php echo $totalQuantity?></td>
+                <td class="info_column"></td>
+                <td class="info_column"><?php echo $totalPrice?></td>
+                <td class="info_column"></td>
             </tr>
 
         </table>
@@ -130,8 +131,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 </section>
 
 
-
-
-
+    
 </body>
 </html>
