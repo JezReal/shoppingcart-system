@@ -60,9 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     require_once("../database/database.php");
     $costumerID=$_SESSION["user_id"];
 
-    echo "User ID: ".$costumerID;
-    echo "\nCart ID: ".$_SESSION['cartID'];
-
     $pdo = connect();
     $sql = "SELECT products.product_thumbnail, products.product_id, products.product_name, carts.cart_id, cart_items.quantity, products.product_price
             FROM carts JOIN cart_items ON carts.cart_id=cart_items.cart_id
@@ -74,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     ?>
 
 <section>
+
     <h1>This is the cart page</h1>
 
 
@@ -127,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
         </table>
 
-        <form>
+        <form action="shipping.php" method="post">
             <button id="checkOutButton" type="submit" name="checkOutButton">Checkout</button>
         </form>
 
@@ -135,7 +133,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
 </section>
 
-
-    
 </body>
 </html>
