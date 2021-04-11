@@ -8,4 +8,3 @@ echo $_SESSION['selectedItemID'];
 
 header('location: product_details.php');
 
-?>
