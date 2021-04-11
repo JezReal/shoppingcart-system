@@ -1,0 +1,29 @@
+section h1 {
+    margin-top: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+#shipping-information {
+    margin-left: 30px;
+}
+
+#shipping-information h3 {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#shipping-information p {
+    margin-bottom: 5px;
+}
+
+#order-container {
+    margin-top: 30px;
+}
+#order-container h3 {
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 30px;
+}
