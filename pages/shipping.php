@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     <title>Shopping cart</title>
     <link rel="stylesheet" href="../styles/reset.css">
     <link rel="stylesheet" href="../styles/header.css">
-    <link rel="stylesheet" href="../styles/cart.css">
+    <link rel="stylesheet" href="../styles/shipping.css">
 </head>
 <body>
     <nav>
@@ -55,21 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
         </div>
     </nav>
 
-    <?php
-
-    require_once("../database/database.php");
-    $costumerID=$_SESSION["user_id"];
-
-    $pdo = connect();
-    $sql = "SELECT products.product_thumbnail, products.product_id, products.product_name, carts.cart_id, cart_items.quantity, products.product_price
-            FROM carts JOIN cart_items ON carts.cart_id=cart_items.cart_id
-            JOIN customers ON carts.customer_id=customers.customer_id
-            JOIN products ON cart_items.product_id = products.product_id
-            WHERE customers.customer_id='$costumerID'";
-    $statement = $pdo->prepare($sql);
-    $statement->execute();
-    ?>
-
     <section>
 
         <h1>This is the Shipping Page</h1>
@@ -77,14 +62,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
         <div id="shipping_container">
 
-            <form>
+            <form class="shippingInfoForm" action="shipping.php" method="post">
+                <label for="fullName">Full name(FN,MI,LN)</label><br>
+                <input type="text" name="fullName" required><br>
+                <label for="address1">Address 1</label><br>
+                <input type="text" name="address1" required><br>
+                <label for="address2">Address 2 (optional)</label><br>
+                <input type="text" name="address2"><br>
+                <label for="address3">Address 3 (optional)</label><br>
+                <input type="text" name="address3"><br>
+
+                <label for="city">City</label><br>
+                <input type="text" name="city" required><br>
+                <label for="state">State</label><br>
+                <input type="text" name="state"><br>
+                <label for="country">Country</label><br>
+                <input type="text" name="country"><br>
                 <button id="checkOutButton" type="submit" name="continueButton">Continue</button>
             </form>
 
         </div>
 
     </section>
-
 </body>
 </html>
-
