@@ -11,6 +11,15 @@ function logout()
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     logout();
 }
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
+
+    $_SESSION['address_is_set'] = "true";
+
+    header("location: payment.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
             if (isset($_SESSION["user_id"])) {
                 $firstname = Authenticator::getLoggedInUserFirstname($_SESSION["user_id"]);
                 echo "<p>" . $firstname . "</p>";
+
                 ?>
 
                 <a href="./cart.php">Cart</a>
@@ -55,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
         </div>
     </nav>
 
-    <section>
+    <section >
 
         <h1>This is the Shipping Page</h1>
 
@@ -63,22 +73,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
         <div id="shipping_container">
 
             <form class="shippingInfoForm" action="shipping.php" method="post">
+
                 <label for="fullName">Full name(FN,MI,LN)</label><br>
                 <input type="text" name="fullName" required><br>
-                <label for="address1">Address 1</label><br>
-                <input type="text" name="address1" required><br>
-                <label for="address2">Address 2 (optional)</label><br>
-                <input type="text" name="address2"><br>
-                <label for="address3">Address 3 (optional)</label><br>
-                <input type="text" name="address3"><br>
 
-                <label for="city">City</label><br>
-                <input type="text" name="city" required><br>
-                <label for="state">State</label><br>
-                <input type="text" name="state"><br>
-                <label for="country">Country</label><br>
-                <input type="text" name="country"><br>
-                <button id="checkOutButton" type="submit" name="continueButton">Continue</button>
+                <div class="address_container">
+
+                    <div class="field_container">
+                        <label for="address1">Address 1</label><br>
+                        <input type="text" name="address1" required><br>
+                    </div>
+
+                    <div class="field_container">
+                         <label for="city1">City</label><br>
+                         <input type="text" name="city1" required><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="province1">Province</label><br>
+                        <input type="text" name="province1" required><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="country1">Country</label><br>
+                        <input type="text" name="country1" required><br>
+                    </div>
+
+                </div>
+
+                <div class="address_container">
+                    <div class="field_container">
+                        <label for="address2">Address 2 (optional)</label><br>
+                        <input type="text" name="address2"><br>
+                    </div>
+                    <div class="field_container">
+                        <label for="city">City</label><br>
+                        <input type="text" name="city"><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="province1province2">Province</label><br>
+                        <input type="text" name="province2"><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="country2">Country</label><br>
+                        <input type="text" name="country2"><br>
+                    </div>
+                </div>
+
+                <div class="address_container">
+                    <div class="field_container">
+                        <label for="address3">Address 3 (optional)</label><br>
+                        <input type="text" name="address3"><br>
+                    </div>
+                    <div class="field_container">
+                        <label for="city">City</label><br>
+                        <input type="text" name="city" ><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="province3">Province</label><br>
+                        <input type="text" name="province3"><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="country3">Country</label><br>
+                        <input type="text" name="country3"><br>
+                    </div>
+                </div>
+                <button id="continue_button" type="submit" name="continueButton">Continue</button>
             </form>
 
         </div>

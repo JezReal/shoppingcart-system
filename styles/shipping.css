@@ -3,9 +3,39 @@ section {
     margin: 10px;
     padding: 10px;
     background-color: #F3FCF0;
+    align-content: center;
 }
 
 section h1 {
     text-align: center;
     font-size: 100px;
+    display: inline-block;
+}
+
+#shipping_container{
+    width: 200px;
+    horiz-align: center;
+}
+
+.address_container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 5px;
+    margin-top: 10px;
+}
+
+#continue_button{
+    margin-top: 15px;
+}
+
+label{
+    margin-bottom: 20px;
+}
+
+input{
+    margin-top: 3px;
+}
+
+form{
+    position: center;
 }
