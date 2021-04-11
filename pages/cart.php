@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     $costumerID=$_SESSION["user_id"];
 
     $pdo = connect();
-    $sql = "SELECT products.product_thumbnail, products.product_id, products.product_name, products.product_weight, carts.cart_id, cart_items.quantity, products.product_price
+    $sql = "SELECT products.product_thumbnail, products.product_id, products.product_name, carts.cart_id, cart_items.quantity, products.product_price
             FROM carts JOIN cart_items ON carts.cart_id=cart_items.cart_id
             JOIN customers ON carts.customer_id=customers.customer_id
             JOIN products ON cart_items.product_id = products.product_id
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
 <section>
 
-    <h2>This is the cart page</h2>
+    <h1>This is the cart page</h1>
 
 
     <div id="cart_items_holder">
@@ -91,46 +91,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
                 $totalPrice=0;
                 $totalQuantity=0;
-                $totalWeight=0;
-                $weightPerCartItem=0;
 
                 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-                    $weight=$row['product_price'];
+
                     $quantity=$row['quantity'];
                     $unitPrice=$row['product_price'];
                     $price=$quantity*$unitPrice;
-                    $weightPerCartItem=$quantity*$weight;
                     $totalPrice+=$price;
                     $totalQuantity+=$quantity;
-                    $totalWeight+=$weightPerCartItem;
 
                     echo'<tr>';
-                    echo'<td class="item_column" ><img id="thumbnailHolder" src = "' . $row['product_thumbnail'] . '" width = "50px" height = "50px" alt="">'. $row['product_name'] .'</td>';
+                    echo'<td class="item_column"><img id="thumbnailHolder" src = "' . $row['product_thumbnail'] . '"width = "50px" height = "50px">'. $row['product_name'] .'</td>';
                     echo'<td class="info_column">'.$quantity.'</td>';
                     echo'<td class="info_column">'."₱ ".number_format($unitPrice, 2).'</td>';
                     echo'<td class="info_column">'."₱ ".number_format($price, 2).'</td>';
                     echo'<td class="remove_button">
                              <form>
-                             <button class="delete_button" type="submit" name="deleteFromCartButton" value="'.$row['product_id'].'"><img src="../icons/remove%20icon.png" alt=""></button>
+                             <button class="delete_button" type="submit" name="deleteFromCartButton" value="'.$row['product_id'].'"><img src="../icons/remove%20icon.png"></button>
                              </form>
-                          </td>';
+                         </td>';
                     echo' </tr>';
                 }
                 ?>
 
             <tr>
-                <td class="total_column"></td>
-                <td class="info_column"><?php echo "total quantity: ".$totalQuantity." pcs."?></td>
-                <td class="info_column"></td>
-                <td class="info_column"><?php echo "subtotal: "."₱ ".number_format($totalPrice, 2) ?></td>
-                <td class="info_column"></td>
-            </tr>
 
-            <tr>
-                <td class="total_column"></td>
-                <td class="info_column"><?php echo "shipping fee: ".$totalQuantity." pcs."?></td>
+                <td class="total_column">total</td>
+                <td class="info_column"><?php echo $totalQuantity?></td>
                 <td class="info_column"></td>
-                <td class="info_column"><?php echo "grand total: "."₱ ".number_format($totalPrice, 2) ?></td>
+                <td class="info_column"><?php echo "₱ ".number_format($totalPrice, 2) ?></td>
                 <td class="info_column"></td>
             </tr>
 
