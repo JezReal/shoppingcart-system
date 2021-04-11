@@ -31,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
     $totalWeight=$_SESSION['total_weight'];
-
     $_SESSION['shipping_fee']=getShippingPrice($totalWeight);
 
     header("location: payment.php");
