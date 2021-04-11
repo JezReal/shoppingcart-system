@@ -102,3 +102,20 @@ function isExistEmail($email)
 
     return false;
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
+    logout();
+}
+
+function logout()
+{
+    $database = connect();
+
+    $query = $database->prepare("DELETE from cart_items WHERE cart_id = :userId");
+    $query->bindParam("userId", $_SESSION["user_id"]);
+    $query->execute();
+
+    unset($_SESSION['activeUserFirstName']);
+    unset($_SESSION["user_id"]);
+    header("Location: ../pages/home_page.php");
+}

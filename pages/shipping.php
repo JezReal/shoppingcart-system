@@ -2,12 +2,6 @@
 
 session_start();
 
-function logout()
-{
-    unset($_SESSION["user_id"]);
-    header("Location: ./home_page.php");
-}
-
 function getShippingPrice($totalWeight)
 {
     $result = '';
@@ -23,10 +17,6 @@ function getShippingPrice($totalWeight)
         $result = $row['price'];
     }
     return $result;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
-    logout();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
@@ -71,7 +61,7 @@ $_SESSION['totalWeight']="dfsdf";
 
                 <a href="./cart.php">Cart</a>
 
-                <form action="./home_page.php" method="post">
+                <form action="../authentication/auth.php" method="post">
                     <button type="submit" name="logoutButton">Logout</button>
                 </form>
                 <?php

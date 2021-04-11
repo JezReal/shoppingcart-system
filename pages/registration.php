@@ -4,15 +4,6 @@ session_start();
 
 unset($_SESSION["login_error_message"]);
 
-function logout()
-{
-    unset($_SESSION["user_id"]);
-    header("Location: ./home_page.php");
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
-    logout();
-}
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
             <a href="./cart.php">Cart</a>
 
-            <form action="./home_page.php" method="post">
+            <form action="../authentication/auth.php" method="post">
                 <button type="submit" name="logoutButton">Logout</button>
             </form>
             <?php
