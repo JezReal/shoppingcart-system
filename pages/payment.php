@@ -1,5 +1,53 @@
 <?php
 session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['checkOutButton'])) {
+    require_once("../database/database.php");
+
+    $customerID = $_SESSION['user_id'];
+
+    $database = connect();
+
+    $jobOrderId = getJobOrderId();
+
+    $query = $database->prepare("INSERT INTO job_orders (customer_id) VALUES(:customerID)");
+    $query->bindParam("customerID", $customerID);
+    $query->execute();
+
+    $items = $database->prepare("SELECT product_id FROM cart_items WHERE cart_id=:cartId");
+    $items->bindParam("cartId", $cartID);
+    $items->execute();
+
+    while ($item = $items->fetch(PDO::FETCH_ASSOC)) {
+        $currentItem = $item['product_id'];
+
+        $jobItem = $database->prepare("INSERT INTO job_items (job_order_id, product_id) VALUES (:jobOrderId, :productId)");
+        $jobItem->bindParam("jobOrderId", $jobOrderId);
+        $jobItem->bindParam("productId", $currentItem);
+        $jobItem->execute();
+    }
+
+    header("Location: ./order_confirmation.php");
+}
+
+function getJobOrderId()
+{
+    $customerID = $_SESSION['user_id'];
+
+    $database = connect();
+    $jobOrderId = $database->prepare("SELECT job_order_id FROM job_orders WHERE customer_id=:customerID");
+    $jobOrderId->bindParam("customerID", $customerID);
+    $jobOrderId->execute();
+
+    if ($jobOrderId->rowCount() > 0) {
+        $result = $jobOrderId->fetch(PDO::FETCH_OBJ);
+
+        return $result->job_order_id;
+    }
+
+    return false;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -63,9 +111,6 @@ $statement->execute();
 ?>
 
 <section>
-
-    <h1>Payment Page</h1>
-
 
     <div id="cart_items_holder">
 
@@ -137,7 +182,7 @@ $statement->execute();
 
         </table>
 
-        <form action="./order_confirmation.php" method="post">
+        <form action="./payment.php" method="post">
             <button id="checkOutButton" type="submit" name="checkOutButton">Checkout</button>
         </form>
 
