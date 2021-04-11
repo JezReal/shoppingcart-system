@@ -8,18 +8,36 @@ function logout()
     header("Location: ./home_page.php");
 }
 
+function getShippingPrice($totalWeight)
+{
+    $result = '';
+
+    require_once("../database/database.php");
+
+    $pdo = connect();
+    $selectShippingID = "SELECT price FROM shipping WHERE '$totalWeight' BETWEEN min_weight AND max_weight";
+    $statement = $pdo->prepare($selectShippingID);
+    $statement->execute();
+
+    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        $result = $row['price'];
+    }
+    return $result;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     logout();
 }
 
-
-
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
+    $totalWeight=$_SESSION['total_weight'];
 
-    $_SESSION['address_is_set'] = "true";
+    $_SESSION['shipping_fee']=getShippingPrice($totalWeight);
 
     header("location: payment.php");
 }
+
+$_SESSION['totalWeight']="dfsdf";
 ?>
 
 <!DOCTYPE html>

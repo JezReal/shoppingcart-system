@@ -5,6 +5,7 @@ session_start();
 function logout()
 {
     unset($_SESSION["user_id"]);
+    unset($_SESSION['shipping_fee']);
     header("Location: ./home_page.php");
 }
 
@@ -61,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
     $costumerID=$_SESSION["user_id"];
 
     $pdo = connect();
-    $sql = "SELECT products.product_thumbnail, products.product_id, products.product_name, carts.cart_id, cart_items.quantity, products.product_price
+    $sql = "SELECT products.product_thumbnail, products.product_id, products.product_name, products.product_weight, carts.cart_id, cart_items.quantity, products.product_price
             FROM carts JOIN cart_items ON carts.cart_id=cart_items.cart_id
             JOIN customers ON carts.customer_id=customers.customer_id
             JOIN products ON cart_items.product_id = products.product_id
@@ -91,14 +92,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
                 $totalPrice=0;
                 $totalQuantity=0;
+                $totalWeight=0;
 
                 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
+                    $weight=$row['product_weight'];
                     $quantity=$row['quantity'];
                     $unitPrice=$row['product_price'];
+                    $_cartItemWeight=$quantity*$weight;
                     $price=$quantity*$unitPrice;
                     $totalPrice+=$price;
                     $totalQuantity+=$quantity;
+                    $totalWeight+=$_cartItemWeight;
 
                     echo'<tr>';
                     echo'<td class="item_column"><img id="thumbnailHolder" src = "' . $row['product_thumbnail'] . '"width = "50px" height = "50px">'. $row['product_name'] .'</td>';
@@ -112,16 +117,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
                          </td>';
                     echo' </tr>';
                 }
+
+                $_SESSION['total_weight']=$totalWeight;
                 ?>
 
             <tr>
-
-                <td class="total_column">total</td>
-                <td class="info_column"><?php echo $totalQuantity?></td>
+                <td class="total_column"></td>
+                <td class="info_column"><?php echo 'total quantity: '.$totalQuantity." pcs."?></td>
                 <td class="info_column"></td>
-                <td class="info_column"><?php echo "₱ ".number_format($totalPrice, 2) ?></td>
+                <td class="info_column"><?php echo 'sub total: '."₱ ".number_format($totalPrice, 2) ?></td>
                 <td class="info_column"></td>
             </tr>
+
+            <?php
+            if(isset($_SESSION['shipping_fee'])){
+                $shippingFee=$_SESSION['shipping_fee'];
+                $grandTotal=$shippingFee+$totalPrice;
+
+                echo '<tr>';
+                echo '<td class="total_column"></td>';
+                echo '<td class="info_column">'.'shipping fee: '."₱ ".number_format($shippingFee, 2).'</td>';
+                echo '<td class="info_column"></td>' ;
+                echo '<td class="info_column">'.'grand total: '."₱ ".number_format($grandTotal, 2).'</td>' ;
+                echo '<td class="info_column"></td>' ;
+                echo '</tr>';
+            }else{
+                echo '<tr>';
+                echo '<td class="total_column"></td>';
+                echo '<td class="info_column">'.'shipping fee: ---- '.'</td>';
+                echo '<td class="info_column"></td>' ;
+                echo '<td class="info_column">'.'grand total: ---- '.'</td>' ;
+                echo '<td class="info_column"></td>' ;
+                echo '</tr>';
+            }
+
+            ?>
 
         </table>
 
