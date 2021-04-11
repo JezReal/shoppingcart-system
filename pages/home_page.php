@@ -26,23 +26,25 @@ function addCart($userID)
     $statement->execute();
 }
 
-function customerHasCart($userID){
+function customerHasCart($userID)
+{
     require_once("../database/database.php");
 
     $pdo = connect();
-    $check_duplicates = "SELECT * FROM carts WHERE customer_id = '".$userID."' LIMIT 1";
+    $check_duplicates = "SELECT * FROM carts WHERE customer_id = '" . $userID . "' LIMIT 1";
     $statement1 = $pdo->prepare($check_duplicates);
     $statement1->execute();
     $res = $statement1->fetch(PDO::FETCH_ASSOC);
 
-    if($res){
+    if ($res) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
-function cartItemExist($costumerID, $productID){
+function cartItemExist($costumerID, $productID)
+{
     require_once("../database/database.php");
 
     $pdo = connect();
@@ -53,14 +55,15 @@ function cartItemExist($costumerID, $productID){
     $statement1->execute();
     $res = $statement1->fetch(PDO::FETCH_ASSOC);
 
-    if($res){
+    if ($res) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
 
-function insertToCarts($userID){
+function insertToCarts($userID)
+{
     require_once("../database/database.php");
 
     $pdo = connect();
@@ -69,7 +72,8 @@ function insertToCarts($userID){
     $statement->execute();
 }
 
-function insertToCartItems($cartID, $productID, $quantity){
+function insertToCartItems($cartID, $productID, $quantity)
+{
     require_once("../database/database.php");
 
     $pdo = connect();
@@ -78,9 +82,10 @@ function insertToCartItems($cartID, $productID, $quantity){
     $statement->execute();
 }
 
-function getCartItemId($userID){
+function getCartItemId($userID)
+{
 
-    $result='';
+    $result = '';
 
     require_once("../database/database.php");
 
@@ -90,12 +95,13 @@ function getCartItemId($userID){
     $statement->execute();
 
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-        $result=$row['cart_item_id'];
+        $result = $row['cart_item_id'];
     }
     return $result;
 }
 
-function editItemQuantity($quantity, $productID, $costumerID){
+function editItemQuantity($quantity, $productID, $costumerID)
+{
     require_once("../database/database.php");
 
     $pdo = connect();
@@ -106,8 +112,9 @@ function editItemQuantity($quantity, $productID, $costumerID){
     $statement->execute();
 }
 
-function getCartID($userID){
-    $result='';
+function getCartID($userID)
+{
+    $result = '';
     require_once("../database/database.php");
 
     $pdo = connect();
@@ -116,31 +123,31 @@ function getCartID($userID){
     $statement->execute();
 
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-        $result=$row['cart_id'];
+        $result = $row['cart_id'];
     }
     return $result;
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
 
-    $quantity=
-    $userID=$_SESSION['user_id'];
-    $productID=$_POST['addToCartButton'];
-    $cartID=getCartID($userID);
-    $_SESSION['cartID']=$cartID;
-    $cartItemID=getCartItemId($userID);
+    $quantity =
+    $userID = $_SESSION['user_id'];
+    $productID = $_POST['addToCartButton'];
+    $cartID = getCartID($userID);
+    $_SESSION['cartID'] = $cartID;
+    $cartItemID = getCartItemId($userID);
 
 
-    if(customerHasCart($userID)){
-        if(cartItemExist($userID, $productID)){
-            editItemQuantity(1,$productID,$userID);
-        }else{
-            insertToCartItems($cartID,$productID,1);
+    if (customerHasCart($userID)) {
+        if (cartItemExist($userID, $productID)) {
+            editItemQuantity(1, $productID, $userID);
+        } else {
+            insertToCartItems($cartID, $productID, 1);
         }
-    }else{
+    } else {
         insertToCarts($userID);
-        $cartID=getCartID($userID);
-        insertToCartItems($cartID,$productID,1);
+        $cartID = getCartID($userID);
+        insertToCartItems($cartID, $productID, 1);
     }
     header('location: cart.php');
 }
@@ -153,9 +160,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping cart</title>
-    <link rel="stylesheet" href="../styles/reset.css">
-    <link rel="stylesheet" href="../styles/header.css">
-    <link rel="stylesheet" href="../styles/home_page.css">
+    <!--    <link rel="stylesheet" href="../styles/reset.css">-->
+    <!--    <link rel="stylesheet" href="../styles/header.css">-->
+    <!--    <link rel="stylesheet" href="../styles/home_page.css">-->
+    <style>
+        <?php include "../styles/reset.css"?>
+        <?php include "../styles/header.css"?>
+        <?php include "../styles/home_page.css"?>
+    </style>
 </head>
 <body>
 
@@ -204,12 +216,13 @@ $statement->execute();
     <div id="products">
         <?php
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            echo "<div>";
+            echo "<div class='product-item'>";
             echo '<img src = "' . $row['product_thumbnail'] . '"width = "100px" height = "100px"/>';
             echo '<h3>' . $row['product_name'] . '</h3>';
-            echo '<p>' . "₱ ".number_format($row['product_price'], 2) . '</p>';
+            echo '<p>' . "₱ " . number_format($row['product_price'], 2) . '</p>';
             echo '<p' . $row['product_stock'] . '</p>';
 
+            echo '<div id="button-container">';
             //set the product id in the url using get
             echo '<form action="product_details.php" method="post">
                     <button type="submit" name="viewDetailsButton" value="' . $row["product_id"] . '">View Details</button>
@@ -220,6 +233,7 @@ $statement->execute();
                     <button type="submit" name="addToCartButton" value="' . $row["product_id"] . '">Add to Cart</button>
                   </form>';
             }
+            echo '</div>';
             echo "</div>";
         }
         ?>
