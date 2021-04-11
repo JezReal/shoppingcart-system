@@ -1,5 +1,41 @@
 <?php
-    session_start();
+session_start();
+
+require_once("../database/database.php");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['goHome'])) {
+    $cartId = getCartId();
+    deleteCartItems($cartId);
+
+    header("Location: ../pages/home_page.php");
+}
+
+function getCartId()
+{
+    $database = connect();
+
+    $cartId = $database->prepare("SELECT cart_id FROM carts WHERE customer_id=:customerId");
+    $cartId->bindParam("customerId", $_SESSION["user_id"]);
+    $cartId->execute();
+
+    if ($cartId->rowCount() > 0) {
+        $result = $cartId->fetch(PDO::FETCH_OBJ);
+
+        return $result->cart_id;
+    }
+
+    return false;
+}
+
+function deleteCartItems($cartId)
+{
+    $database = connect();
+
+    $query = $database->prepare("DELETE FROM cart_items WHERE cart_id=:cartId");
+    $query->bindParam("cartId", $cartId);
+    $query->execute();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -147,11 +183,13 @@ $statement->execute();
                 echo '<td class="info_column"></td>';
                 echo '</tr>';
             }
-
             ?>
 
         </table>
 
+        <form action="./order_confirmation.php" method="post">
+            <button id="homeButton" type="submit" name="goHome">Go home</button>
+        </form>
     </div>
 </section>
 </body>
