@@ -2,16 +2,16 @@
 
 session_start();
 
-function logout()
-{
-    unset($_SESSION['activeUserFirstName']);
-    unset($_SESSION["user_id"]);
-    header("Location: ./product_details.php");
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
-    logout();
-}
+//function logout()
+//{
+//    unset($_SESSION['activeUserFirstName']);
+//    unset($_SESSION["user_id"]);
+//    header("Location: ./product_details.php");
+//}
+//
+//if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
+//    logout();
+//}
 
 if (isset($_SESSION['user_id'])) {
     function addCart($userID)
