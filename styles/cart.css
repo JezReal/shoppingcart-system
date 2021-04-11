@@ -82,5 +82,10 @@ th{
 .item{
     width: 100px;
     display: inline;
+}
 
+#cart-empty {
+    margin-top: 50px;
+    font-size: 30px;
+    text-align: center;
 }
