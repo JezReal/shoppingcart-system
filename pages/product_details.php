@@ -182,13 +182,16 @@ if (isset($_SESSION['user_id'])) {
     <div class="nav-container">
         <!-- Display first name if user is logged in -->
         <?php
-        if (isset($_SESSION['activeUserFirstName'])) {
-            echo "<p>" . $_SESSION['activeUserFirstName'] . "</p>";
+
+        require_once("../authentication/Authenticator.php");
+        if (isset($_SESSION["user_id"])) {
+            $firstname = Authenticator::getLoggedInUserFirstname($_SESSION["user_id"]);
+            echo "<p>" . $firstname . "</p>";
             ?>
 
             <a href="./cart.php">Cart</a>
 
-            <form action="./product_details.php" method="post">
+            <form action="./home_page.php" method="post">
                 <button type="submit" name="logoutButton">Logout</button>
             </form>
             <?php
@@ -196,6 +199,7 @@ if (isset($_SESSION['user_id'])) {
             echo "<a href='./login.php'>Login</a>";
             echo "<a href='./registration.php'>Register</a>";
         }
+
         ?>
     </div>
 </nav>
