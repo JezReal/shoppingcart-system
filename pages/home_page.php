@@ -207,7 +207,6 @@ $statement->execute();
             echo "<div>";
             echo '<img src = "' . $row['product_thumbnail'] . '"width = "100px" height = "100px"/>';
             echo '<h3>' . $row['product_name'] . '</h3>';
-            echo '<p>' . $row['product_description'] . '</p>';
             echo '<p>' . "₱ ".number_format($row['product_price'], 2) . '</p>';
             echo '<p' . $row['product_stock'] . '</p>';
 
