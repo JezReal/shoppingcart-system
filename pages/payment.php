@@ -1,7 +1,5 @@
 <?php
-
-session_start();
-
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +8,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping cart</title>
+    <title>Payment</title>
     <link rel="stylesheet" href="../styles/reset.css">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/cart.css">
@@ -136,7 +134,7 @@ session_start();
 
             </table>
 
-            <form action="shipping.php" method="post">
+            <form action="./order_confirmation.php" method="post">
                 <button id="checkOutButton" type="submit" name="checkOutButton">Checkout</button>
             </form>
 
