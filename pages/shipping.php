@@ -5,6 +5,7 @@ session_start();
 function logout()
 {
     unset($_SESSION["user_id"]);
+    unset($_SESSION['shipping_fee']);
     header("Location: ./home_page.php");
 }
 
