@@ -51,7 +51,7 @@ $_SESSION['totalWeight'] = "dfsdf";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shipping</title>
-    
+
     <style>
         <?php include "../styles/reset.css" ?>
         <?php include "../styles/header.css" ?>
@@ -91,9 +91,6 @@ $_SESSION['totalWeight'] = "dfsdf";
 </nav>
 
 <section>
-
-    <h1>This is the Shipping Page</h1>
-
 
     <div id="shipping_container">
 
