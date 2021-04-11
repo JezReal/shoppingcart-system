@@ -6,36 +6,40 @@ section {
     align-content: center;
 }
 
-section h1 {
-    text-align: center;
-    font-size: 100px;
-    display: inline-block;
+#container {
+    margin-left: 50px;
 }
 
-#shipping_container{
+#shipping_container {
+    margin-top: 50px;
     width: 200px;
     horiz-align: center;
 }
 
-.address_container{
+h3 {
+    margin-top: 50px;
+    font-size: 30px;
+}
+
+.address_container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-gap: 5px;
     margin-top: 10px;
 }
 
-#continue_button{
+#continue_button {
     margin-top: 15px;
 }
 
-label{
+label {
     margin-bottom: 20px;
 }
 
-input{
+input {
     margin-top: 3px;
 }
 
-form{
+form {
     position: center;
 }

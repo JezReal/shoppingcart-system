@@ -92,80 +92,85 @@ $_SESSION['totalWeight'] = "dfsdf";
 
 <section>
 
-    <div id="shipping_container">
+    <div id="container">
+        <h3>Shipping information</h3>
 
-        <form class="shippingInfoForm" action="shipping.php" method="post">
+        <div id="shipping_container">
 
-            <label for="fullName">Full name(FN,MI,LN)</label><br>
-            <input type="text" name="fullName" required><br>
+            <form class="shippingInfoForm" action="shipping.php" method="post">
 
-            <div class="address_container">
+                <label for="fullName">Full name(FN,MI,LN)</label><br>
+                <input type="text" name="fullName" required><br>
 
-                <div class="field_container">
-                    <label for="address1">Address 1</label><br>
-                    <input type="text" name="address1" required><br>
+                <div class="address_container">
+
+                    <div class="field_container">
+                        <label for="address1">Address 1</label><br>
+                        <input type="text" name="address1" required><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="city1">City</label><br>
+                        <input type="text" name="city1" required><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="province1">Province</label><br>
+                        <input type="text" name="province1" required><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="country1">Country</label><br>
+                        <input type="text" name="country1" required><br>
+                    </div>
+
                 </div>
 
-                <div class="field_container">
-                    <label for="city1">City</label><br>
-                    <input type="text" name="city1" required><br>
+                <div class="address_container">
+                    <div class="field_container">
+                        <label for="address2">Address 2 (optional)</label><br>
+                        <input type="text" name="address2"><br>
+                    </div>
+                    <div class="field_container">
+                        <label for="city">City</label><br>
+                        <input type="text" name="city"><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="province1province2">Province</label><br>
+                        <input type="text" name="province2"><br>
+                    </div>
+
+                    <div class="field_container">
+                        <label for="country2">Country</label><br>
+                        <input type="text" name="country2"><br>
+                    </div>
                 </div>
 
-                <div class="field_container">
-                    <label for="province1">Province</label><br>
-                    <input type="text" name="province1" required><br>
-                </div>
+                <div class="address_container">
+                    <div class="field_container">
+                        <label for="address3">Address 3 (optional)</label><br>
+                        <input type="text" name="address3"><br>
+                    </div>
+                    <div class="field_container">
+                        <label for="city">City</label><br>
+                        <input type="text" name="city"><br>
+                    </div>
 
-                <div class="field_container">
-                    <label for="country1">Country</label><br>
-                    <input type="text" name="country1" required><br>
-                </div>
+                    <div class="field_container">
+                        <label for="province3">Province</label><br>
+                        <input type="text" name="province3"><br>
+                    </div>
 
-            </div>
+                    <div class="field_container">
+                        <label for="country3">Country</label><br>
+                        <input type="text" name="country3"><br>
+                    </div>
+                </div>
+                <button id="continue_button" type="submit" name="continueButton">Continue</button>
+            </form>
 
-            <div class="address_container">
-                <div class="field_container">
-                    <label for="address2">Address 2 (optional)</label><br>
-                    <input type="text" name="address2"><br>
-                </div>
-                <div class="field_container">
-                    <label for="city">City</label><br>
-                    <input type="text" name="city"><br>
-                </div>
-
-                <div class="field_container">
-                    <label for="province1province2">Province</label><br>
-                    <input type="text" name="province2"><br>
-                </div>
-
-                <div class="field_container">
-                    <label for="country2">Country</label><br>
-                    <input type="text" name="country2"><br>
-                </div>
-            </div>
-
-            <div class="address_container">
-                <div class="field_container">
-                    <label for="address3">Address 3 (optional)</label><br>
-                    <input type="text" name="address3"><br>
-                </div>
-                <div class="field_container">
-                    <label for="city">City</label><br>
-                    <input type="text" name="city"><br>
-                </div>
-
-                <div class="field_container">
-                    <label for="province3">Province</label><br>
-                    <input type="text" name="province3"><br>
-                </div>
-
-                <div class="field_container">
-                    <label for="country3">Country</label><br>
-                    <input type="text" name="country3"><br>
-                </div>
-            </div>
-            <button id="continue_button" type="submit" name="continueButton">Continue</button>
-        </form>
+        </div>
 
     </div>
 
