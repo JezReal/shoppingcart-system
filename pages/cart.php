@@ -50,6 +50,10 @@ function deleteCartItem($productID, $costumerID)
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['minusItemButton'])) {
 
     minusItemQuantity($_POST['minusItemButton'],$_SESSION['user_id']);
+
+    if($_POST['lastQuantity']<=1){
+        deleteCartItem($_POST['minusItemButton'],$_SESSION['user_id']);
+    }
 }
 
 unset($_POST['minusItemButton']);
@@ -174,6 +178,7 @@ $statement->execute();
                     echo '<td class="info_column">' . "₱ " . number_format($price, 2) . '</td>';
                     echo '<td class="remove_button">
                              <form action="cart.php" method="post">
+                             <input type="hidden" name="lastQuantity" value="'.$quantity.'">
                              <button class="delete_button" type="submit" name="plusItemButton" value="' . $row['product_id'] . '">+</button>
                              <button class="delete_button" type="submit" name="minusItemButton" value="' . $row['product_id'] . '">-</button>
                              <button class="delete_button" type="submit" name="deleteFromCartButton" value="' . $row['product_id'] . '"><img src="../icons/remove%20icon.png"></button>
