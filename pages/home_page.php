@@ -119,7 +119,6 @@ function getCartID($userID)
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
 
-    $quantity =
     $userID = $_SESSION['user_id'];
     $productID = $_POST['addToCartButton'];
     $cartID = getCartID($userID);

@@ -58,8 +58,20 @@ th{
 }
 
 .delete_button{
+    text-align: center;
+    width: 20px;
+    font-size: 25px;
     background-color: transparent;
     border: none;
+}
+
+.delete_button:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.delete_button:hover{
+    transform: scale(1.2);
 }
 
 #item_holder{

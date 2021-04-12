@@ -2,12 +2,69 @@
 
 session_start();
 
+
+
 require_once("../database/database.php");
 
 $database = connect();
 $query = $database->prepare("SELECT * FROM cart_items WHERE cart_id=:customerId");
 $query->bindParam("customerId", $_SESSION['user_id']);
 $query->execute();
+
+function minusItemQuantity($productID, $costumerID)
+{
+    require_once("../database/database.php");
+
+    $pdo = connect();
+    $editItemQuantity = "UPDATE cart_items
+                        JOIN carts ON cart_items.cart_id=carts.cart_id
+                        SET quantity = quantity - '1' WHERE cart_items.product_id = '$productID' AND carts.customer_id='$costumerID'";
+    $statement = $pdo->prepare($editItemQuantity);
+    $statement->execute();
+}
+
+function plusItemQuantity($productID, $costumerID)
+{
+    require_once("../database/database.php");
+
+    $pdo = connect();
+    $editItemQuantity = "UPDATE cart_items
+                        JOIN carts ON cart_items.cart_id=carts.cart_id
+                        SET quantity = quantity + '1' WHERE cart_items.product_id = '$productID' AND carts.customer_id='$costumerID'";
+    $statement = $pdo->prepare($editItemQuantity);
+    $statement->execute();
+}
+
+function deleteCartItem($productID, $costumerID)
+{
+    require_once("../database/database.php");
+
+    $pdo = connect();
+    $editItemQuantity = "DELETE  cart_items FROM cart_items 
+                        JOIN carts ON cart_items.cart_id=carts.cart_id 
+                        WHERE cart_items.product_id = '$productID' AND carts.customer_id='$costumerID'";
+    $statement = $pdo->prepare($editItemQuantity);
+    $statement->execute();
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['minusItemButton'])) {
+
+    minusItemQuantity($_POST['minusItemButton'],$_SESSION['user_id']);
+}
+
+unset($_POST['minusItemButton']);
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['plusItemButton'])) {
+
+    plusItemQuantity($_POST['plusItemButton'],$_SESSION['user_id']);
+}
+unset($_POST['plusItemButton']);
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['deleteFromCartButton'])) {
+
+    deleteCartItem($_POST['deleteFromCartButton'],$_SESSION['user_id']);
+}
+unset($_POST['deleteFromCartButton']);
 
 ?>
 
@@ -116,7 +173,9 @@ $statement->execute();
                     echo '<td class="info_column">' . "₱ " . number_format($unitPrice, 2) . '</td>';
                     echo '<td class="info_column">' . "₱ " . number_format($price, 2) . '</td>';
                     echo '<td class="remove_button">
-                             <form>
+                             <form action="cart.php" method="post">
+                             <button class="delete_button" type="submit" name="plusItemButton" value="' . $row['product_id'] . '">+</button>
+                             <button class="delete_button" type="submit" name="minusItemButton" value="' . $row['product_id'] . '">-</button>
                              <button class="delete_button" type="submit" name="deleteFromCartButton" value="' . $row['product_id'] . '"><img src="../icons/remove%20icon.png"></button>
                              </form>
                          </td>';
