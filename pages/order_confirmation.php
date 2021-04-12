@@ -51,6 +51,7 @@ function deleteCartItems($cartId)
         <?php include "../styles/header.css"?>
         <?php include "../styles/cart.css"?>
         <?php include "../styles/order_confirmation.css"?>
+        <?php include "../styles/navigation_styles.css"?>
     </style>
 </head>
 <body>
@@ -108,6 +109,7 @@ $statement->execute();
         <br>
 
         <?php
+
         echo "<p>Name: " . $_SESSION['shippingFullName'] . "</p>";
         echo "<p>Address 1: " . $_SESSION['address'].", " . $_SESSION['city'].", " .$_SESSION['province'].", "  . $_SESSION['country'] .  "</p>";
 
@@ -120,6 +122,7 @@ $statement->execute();
         }
 
         ?>
+
     </div>
 
     <div id="order-container">
@@ -191,7 +194,7 @@ $statement->execute();
         </table>
 
         <form action="./order_confirmation.php" method="post">
-            <button id="homeButton" type="submit" name="goHome">Go home</button>
+            <button id="checkOutButton" type="submit" name="goHome">Go home</button>
         </form>
     </div>
 </section>

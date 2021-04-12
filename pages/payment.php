@@ -62,6 +62,7 @@ function getJobOrderId()
         <?php include "../styles/reset.css" ?>
         <?php include "../styles/header.css" ?>
         <?php include "../styles/cart.css" ?>
+        <?php include "../styles/navigation_styles.css"?>
     </style>
 </head>
 <body>
@@ -152,7 +153,7 @@ $statement->execute();
             ?>
 
             <tr>
-                <td class="total_column"></td>
+                <td class="item_column"></td>
                 <td class="info_column"><?php echo 'total quantity: ' . $totalQuantity . " pcs." ?></td>
                 <td class="info_column"></td>
                 <td class="info_column"><?php echo 'sub total: ' . "₱ " . number_format($totalPrice, 2) ?></td>
@@ -164,14 +165,14 @@ $statement->execute();
                 $grandTotal = $shippingFee + $totalPrice;
 
                 echo '<tr>';
-                echo '<td class="total_column"></td>';
+                echo '<td class="item_column"></td>';
                 echo '<td class="info_column">' . 'shipping fee: ' . "₱ " . number_format($shippingFee, 2) . '</td>';
                 echo '<td class="info_column"></td>';
                 echo '<td class="info_column">' . 'grand total: ' . "₱ " . number_format($grandTotal, 2) . '</td>';
                 echo '</tr>';
             } else {
                 echo '<tr>';
-                echo '<td class="total_column"></td>';
+                echo '<td class="item_column"></td>';
                 echo '<td class="info_column">' . 'shipping fee: ---- ' . '</td>';
                 echo '<td class="info_column"></td>';
                 echo '<td class="info_column">' . 'grand total: ---- ' . '</td>';
@@ -182,11 +183,11 @@ $statement->execute();
 
         </table>
 
-        <form action="./payment.php" method="post">
-            <button id="checkOutButton" type="submit" name="checkOutButton">Checkout</button>
-        </form>
-
     </div>
+
+    <form action="./payment.php" method="post">
+        <button id="checkOutButton" type="submit" name="checkOutButton">Checkout</button>
+    </form>
 
 </section>
 
