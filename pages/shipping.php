@@ -31,12 +31,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
     $totalWeight = $_SESSION['total_weight'];
+
     $_SESSION['shipping_fee'] = getShippingPrice($totalWeight);
     $_SESSION['shippingFullName'] = $_POST['fullName'];
     $_SESSION['address'] = $_POST['address1'];
     $_SESSION['city'] = $_POST['city1'];
     $_SESSION['province'] = $_POST['province1'];
     $_SESSION['country'] = $_POST['country1'];
+
+    $_SESSION['address2'] = $_POST['address2'];
+    $_SESSION['city2'] = $_POST['city2'];
+    $_SESSION['province2'] = $_POST['province2'];
+    $_SESSION['country2'] = $_POST['country2'];
+
+    $_SESSION['address3'] = $_POST['address3'];
+    $_SESSION['city3'] = $_POST['city3'];
+    $_SESSION['province3'] = $_POST['province3'];
+    $_SESSION['country3'] = $_POST['country3'];
+
 
     header("location: payment.php");
 }

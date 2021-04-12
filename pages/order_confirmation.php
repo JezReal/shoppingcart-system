@@ -109,10 +109,16 @@ $statement->execute();
 
         <?php
         echo "<p>Name: " . $_SESSION['shippingFullName'] . "</p>";
-        echo "<p>Address: " . $_SESSION['address'] . "</p>";
-        echo "<p>City: " . $_SESSION['city'] . "</p>";
-        echo "<p>Province: " . $_SESSION['province'] . "</p>";
-        echo "<p>Country: " . $_SESSION['country'] . "</p>";
+        echo "<p>Address 1: " . $_SESSION['address'].", " . $_SESSION['city'].", " .$_SESSION['province'].", "  . $_SESSION['country'] .  "</p>";
+
+        if(isset($_SESSION['address2'])){
+            echo "<p>Address 2: " . $_SESSION['address2'].", " . $_SESSION['city2'].", " .$_SESSION['province2'].", "  . $_SESSION['country2'] .  "</p>";
+        }
+
+        if(isset($_SESSION['address3'])){
+            echo "<p>Address 3: " . $_SESSION['address3'].", " . $_SESSION['city3'].", " .$_SESSION['province3'].", "  . $_SESSION['country3'] .  "</p>";
+        }
+
         ?>
     </div>
 
@@ -159,7 +165,6 @@ $statement->execute();
                 <td class="info_column"><?php echo 'total quantity: ' . $totalQuantity . " pcs." ?></td>
                 <td class="info_column"></td>
                 <td class="info_column"><?php echo 'sub total: ' . "₱ " . number_format($totalPrice, 2) ?></td>
-                <td class="info_column"></td>
             </tr>
 
             <?php
@@ -172,7 +177,6 @@ $statement->execute();
                 echo '<td class="info_column">' . 'shipping fee: ' . "₱ " . number_format($shippingFee, 2) . '</td>';
                 echo '<td class="info_column"></td>';
                 echo '<td class="info_column">' . 'grand total: ' . "₱ " . number_format($grandTotal, 2) . '</td>';
-                echo '<td class="info_column"></td>';
                 echo '</tr>';
             } else {
                 echo '<tr>';
@@ -180,7 +184,6 @@ $statement->execute();
                 echo '<td class="info_column">' . 'shipping fee: ---- ' . '</td>';
                 echo '<td class="info_column"></td>';
                 echo '<td class="info_column">' . 'grand total: ---- ' . '</td>';
-                echo '<td class="info_column"></td>';
                 echo '</tr>';
             }
             ?>
