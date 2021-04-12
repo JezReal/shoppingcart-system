@@ -1,16 +1,27 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ebfffe;
+    padding: 20px;
+}
+
 section {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 85vh;
+    height:auto;
     padding: 10px;
-    background-color: #F3FCF0;
 }
 #product {
-   display: flex;
+    height: 605px;
+    margin-top: 80px;
+    display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: right;
     align-items: flex-start;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px #cac9c9;
+    overflow: hidden;
 }
 
 #image-container {
@@ -20,8 +31,20 @@ section {
 #image-container img {
     max-width: 100%;
     max-height: 100%;
-    width: 400px;
-    height: 400px;
+    width: 610px;
+    height: 610px;
+    border-right: 1px solid #c6c6c6;
+}
+
+#product button{
+    height: 40px;
+    width: 250px;
+    margin-top: 10px;
+    background-color: white;
+    background-color: #04bad2;
+    border: 1px solid #04bad2;
+    margin-bottom: -1px;
+    border-radius: 20px;
 }
 
 #quantity-input {
@@ -40,6 +63,7 @@ section {
 
 #text-container p {
     font-size: 20px;
+    font-weight: lighter;
 }
 
 #text-container .generic-text {
@@ -48,4 +72,5 @@ section {
 
 #product-description {
     margin-bottom: 30px;
+    font-style: italic;
 }

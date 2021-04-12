@@ -10,7 +10,7 @@ function logout()
 
 function getShippingPrice($totalWeight)
 {
-    $result = '';
+    $result = 0;
 
     require_once("../database/database.php");
 
@@ -53,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
     header("location: payment.php");
 }
 
-$_SESSION['totalWeight'] = "dfsdf";
 ?>
 
 <!DOCTYPE html>
@@ -68,13 +67,14 @@ $_SESSION['totalWeight'] = "dfsdf";
         <?php include "../styles/reset.css" ?>
         <?php include "../styles/header.css" ?>
         <?php include "../styles/shipping.css" ?>
+        <?php include "../styles/navigation_styles.css"?>
     </style>
 </head>
 <body>
 <nav>
     <div id="logo-container">
         <!-- Logo goes here -->
-        <a href="./home_page.php">Logo here</a>
+        <a href="./home_page.php"><img src="../resources/logo.png"></a>
     </div>
 
     <div class="nav-container">

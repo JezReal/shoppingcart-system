@@ -1,0 +1,16 @@
+nav{
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 5%;
+    top: 10px;
+    overflow: hidden;
+    position: fixed; /* Set the navbar to fixed position */
+    align-items: center;
+    border-radius: 50px;
+    background-color: #fdeb43;
+}
+
+nav button{
+    background-color: transparent;
+    border: none;
+}

@@ -153,6 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
         <?php include "../styles/reset.css"?>
         <?php include "../styles/header.css"?>
         <?php include "../styles/home_page.css"?>
+        <?php include "../styles/navigation_styles.css"?>
     </style>
 </head>
 <body>
@@ -168,7 +169,7 @@ $statement->execute();
 <nav>
     <div id="logo-container">
         <!-- Logo goes here -->
-        <a href="./home_page.php">Logo here</a>
+        <a href="./home_page.php"><img src="../resources/logo.png"></a>
     </div>
 
     <div class="nav-container">
@@ -197,13 +198,14 @@ $statement->execute();
 </nav>
 
 <section>
+
     <h1>Products available</h1>
 
     <div id="products">
         <?php
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
             echo "<div class='product-item'>";
-            echo '<img src = "' . $row['product_thumbnail'] . '"width = "100px" height = "100px"/>';
+            echo '<img src = "' . $row['product_thumbnail'] . '"width = "152px" height = "152px"/>';
             echo '<h3>' . $row['product_name'] . '</h3>';
             echo '<p>' . "₱ " . number_format($row['product_price'], 2) . '</p>';
             echo '<p' . $row['product_stock'] . '</p>';

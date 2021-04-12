@@ -1,8 +1,12 @@
+body{
+    font-family: Helvetica, sans-serif;
+    background-color: #ebfffe;
+    padding: 20px;
+}
+
 section {
-    height: 1120%;
-    margin: 10px;
+    height: auto;
     padding: 10px;
-    background-color: #F3FCF0;
 }
 
 section h2 {
@@ -10,14 +14,33 @@ section h2 {
     font-size: 50px;
 }
 
-table,  td {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-top: 50px;
-    border: 1px solid #c6c6c6;
+#cart_items_holder{
+    align-items: center;
+    margin-top: 100px;
+    background-color: white;
+    box-shadow: 2px 2px 10px #cac9c9;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .item_column{
+    border-left: none;
+}
+
+table,  td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #c6c6c6;
+}
+
+table{
+    width: 101%;
+    border: none;
+}
+
+.item_column{
+    height: 40px;
+    margin-left: 10px;
     text-align: left;
 }
 
@@ -38,10 +61,8 @@ td{
     vertical-align: middle;
 }
 
-
-
 th{
-    background-color: #c6c6c6;
+    background-color: #99ccff;
     font-weight: bold;
 }
 
@@ -63,6 +84,7 @@ th{
     font-size: 25px;
     background-color: transparent;
     border: none;
+    color: #3399cc;
 }
 
 .delete_button:focus{
@@ -81,6 +103,14 @@ th{
 #checkOutButton{
     margin-top: 10px;
     float: right;
+    height: 40px;
+    width: 150px;
+    background-color: #04bad2;
+    color: white;
+    border: 1px solid #04bad2;
+    margin-bottom: -1px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px #cac9c9;
 }
 
 #thumbnailHolder{
@@ -90,6 +120,8 @@ th{
     margin-right: 10px;
     margin-left: 10px;
 }
+
+
 
 .item{
     width: 100px;

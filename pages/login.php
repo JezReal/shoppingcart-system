@@ -27,7 +27,7 @@ unset($_SESSION["passwordMismatch"]);
 <nav>
     <div id="logo-container">
         <!-- Logo goes here -->
-        <a href="./home_page.php">Logo here</a>
+        <a href="./home_page.php"><img src="../resources/logo.png"></a>
     </div>
 
     <div class="nav-container">

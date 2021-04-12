@@ -3,6 +3,7 @@
 session_start();
 
 if (isset($_SESSION['user_id'])) {
+
     function addCart($userID)
     {
         require_once("../database/database.php");
@@ -158,6 +159,7 @@ if (isset($_SESSION['user_id'])) {
         <?php include "../styles/reset.css" ?>
         <?php include "../styles/header.css" ?>
         <?php include "../styles/product_details.css" ?>
+        <?php include "../styles/navigation_styles.css"?>
     </style>
 </head>
 <body>
@@ -165,7 +167,7 @@ if (isset($_SESSION['user_id'])) {
 <nav>
     <div id="logo-container">
         <!-- Logo goes here -->
-        <a href="./home_page.php">Logo here</a>
+        <a href="./home_page.php"><img src="../resources/logo.png"></a>
     </div>
 
     <div class="nav-container">
@@ -206,6 +208,7 @@ $statement->execute();
 ?>
 
 <section>
+
     <div id="product">
         <?php
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
