@@ -18,6 +18,7 @@ unset($_SESSION["login_error_message"]);
         <?php include "../styles/reset.css" ?>
         <?php include "../styles/header.css" ?>
         <?php include "../styles/registration.css" ?>
+        <?php include "../styles/navigation_styles.css"?>
     </style>
 </head>
 <body>
@@ -89,7 +90,7 @@ unset($_SESSION["login_error_message"]);
         <input type="password" name="confirmPassword" id="confirmPassword" required>
         <br>
 
-        <input type="submit" name="registerButton" value="Register"/>
+        <button type="submit" name="registerButton" value="Register">Register</button>
     </form>
 </section>
 </body>

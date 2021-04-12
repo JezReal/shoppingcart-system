@@ -21,6 +21,7 @@ unset($_SESSION["passwordMismatch"]);
         <?php include "../styles/reset.css" ?>
         <?php include "../styles/header.css" ?>
         <?php include "../styles/login.css" ?>
+        <?php include "../styles/navigation_styles.css"?>
     </style>
 </head>
 <body>
@@ -70,7 +71,7 @@ unset($_SESSION["passwordMismatch"]);
         <br>
         <input type="password" name="password" id="password" required>
         <br>
-        <input type="submit" name="loginButton" value="Log in"/>
+        <button type="submit" name="loginButton" value="Log in">Login</button>
     </form>
 </section>
 </body>
