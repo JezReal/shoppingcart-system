@@ -2,17 +2,59 @@
 
 session_start();
 
+
 function logout()
 {
     unset($_SESSION["user_id"]);
     header("Location: ./home_page.php");
 }
 
-function getShippingPrice($totalWeight)
-{
-    $result = 0;
+function getWeightLimit(){
+
+    $weight=0;
 
     require_once("../database/database.php");
+
+    $pdo = connect();
+    $selectShippingID = "SELECT max_weight FROM shipping";
+    $statement = $pdo->prepare($selectShippingID);
+    $statement->execute();
+
+    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        $weight = $row['max_weight'];
+    }
+
+    return $weight;
+
+}
+
+
+function getShippingPrice($totalWeight)
+{
+
+    $limit=getWeightLimit();
+
+    do{
+        require_once("../database/database.php");
+
+        if($totalWeight>$limit){
+            $tempWeight=$limit;
+            $totalWeight-=$limit;
+        }else{
+            $tempWeight=$totalWeight;
+        }
+
+        $pdo = connect();
+        $selectShippingID = "SELECT price FROM shipping WHERE '$tempWeight' BETWEEN min_weight AND max_weight";
+        $statement = $pdo->prepare($selectShippingID);
+        $statement->execute();
+
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $result+=$row['price'];
+            echo $row['price'];
+        }
+
+    }while($totalWeight>$limit);
 
     $pdo = connect();
     $selectShippingID = "SELECT price FROM shipping WHERE '$totalWeight' BETWEEN min_weight AND max_weight";
@@ -20,9 +62,12 @@ function getShippingPrice($totalWeight)
     $statement->execute();
 
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-        $result = $row['price'];
+        $result+=$row['price'];
+        echo $row['price'];
     }
-    return $result;
+
+        return $result;
+
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
@@ -30,7 +75,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
+
     $totalWeight = $_SESSION['total_weight'];
+
+    $_SESSION['weight_limit']=getWeightLimit();
 
     $_SESSION['shipping_fee'] = getShippingPrice($totalWeight);
     $_SESSION['shippingFullName'] = $_POST['fullName'];

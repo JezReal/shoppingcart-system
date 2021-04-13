@@ -209,7 +209,7 @@ require_once("../database/database.php");
 $selectedProductID = $_POST['viewDetailsButton'];
 
 $pdo = connect();
-$sql = "SELECT product_id, product_name, product_description, product_price, product_stock, product_photo FROM products WHERE product_id='" . $selectedProductID . "'";
+$sql = "SELECT product_id, product_name, product_description, product_price, product_stock, product_weight, product_photo FROM products WHERE product_id='" . $selectedProductID . "'";
 $statement = $pdo->prepare($sql);
 $statement->execute();
 ?>
@@ -219,6 +219,22 @@ $statement->execute();
     <div id="product">
         <?php
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+
+            $quantityLabel='';
+            $weightLabel='';
+
+            if($row['product_stock']<=1){
+                $quantityLabel='pc.';
+            }else{
+                $quantityLabel='pcs';
+            }
+
+            if($row['product_weight']<=1){
+                $weightLabel='kg.';
+            }else{
+                $weightLabel='kgs';
+            }
+
             echo "<div id='image-container'>";
             echo '<img src = "' . $row['product_photo'] . '"/>';
             echo "</div>";
@@ -227,7 +243,8 @@ $statement->execute();
             echo '<h3>' . $row['product_name'] . '</h3>';
             echo '<p id="product-description">' . $row['product_description'] . '</p>';
             echo '<p class="generic-text">' . "₱ " . number_format($row['product_price'], 2) . '</p>';
-            echo '<p class="generic-text">' . "Stock: " . $row['product_stock'] . '</p>';
+            echo '<p class="generic-text">' . "Stock: " . $row['product_stock'] ." ".$quantityLabel.'</p>';
+            echo '<p class="generic-text">' . "Weight: " . $row['product_weight'] ." ".$weightLabel.'</p>';
 
             //set the product id in the url using get
             echo '<form action="product_details.php" method="post">';
