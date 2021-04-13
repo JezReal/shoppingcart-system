@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['checkOutButton'])) {
     $database = connect();
 
     $jobOrderId = getJobOrderId();
+    $cartID = getCartID();
 
     $query = $database->prepare("INSERT INTO job_orders (customer_id) VALUES(:customerID)");
     $query->bindParam("customerID", $customerID);
@@ -35,7 +36,7 @@ function getJobOrderId()
     $customerID = $_SESSION['user_id'];
 
     $database = connect();
-    $jobOrderId = $database->prepare("SELECT job_order_id FROM job_orders WHERE customer_id=:customerID");
+    $jobOrderId = $database->prepare("SELECT job_order_id from job_orders WHERE customer_id=:customerID ORDER BY job_order_id desc limit 1;");
     $jobOrderId->bindParam("customerID", $customerID);
     $jobOrderId->execute();
 
@@ -43,6 +44,22 @@ function getJobOrderId()
         $result = $jobOrderId->fetch(PDO::FETCH_OBJ);
 
         return $result->job_order_id;
+    }
+
+    return false;
+}
+
+function getCartId() {
+    $database = connect();
+
+    $cartId = $database->prepare("SELECT cart_id FROM carts WHERE customer_id=:customerId");
+    $cartId->bindParam("customerId", $_SESSION["user_id"]);
+    $cartId->execute();
+
+    if ($cartId->rowCount() > 0) {
+        $result = $cartId->fetch(PDO::FETCH_OBJ);
+
+        return $result->cart_id;
     }
 
     return false;
