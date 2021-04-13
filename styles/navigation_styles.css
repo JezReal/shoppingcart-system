@@ -10,7 +10,7 @@ nav{
     align-items: center;
     border-radius: 50px;
     background-color: #fdeb43;
-    box-shadow: 1px 1px 15px #cac9c9;
+    box-shadow: 1px 1px 5px #d2d2d2;
 }
 
 nav button{
