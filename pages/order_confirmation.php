@@ -49,7 +49,6 @@ function deleteCartItems($cartId)
     <style>
         <?php include "../styles/reset.css"?>
         <?php include "../styles/header.css"?>
-        <?php include "../styles/cart.css"?>
         <?php include "../styles/order_confirmation.css"?>
         <?php include "../styles/navigation_styles.css"?>
     </style>

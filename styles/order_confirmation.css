@@ -49,3 +49,140 @@ section h1 {
     flex-direction: row;
     justify-content: flex-end;
 }
+
+body{
+    font-family: Helvetica, sans-serif;
+    background-color: #ebfffe;
+    padding: 20px;
+}
+
+section {
+    height: auto;
+    padding: 10px;
+}
+
+section h2 {
+    text-align: center;
+    font-size: 50px;
+}
+
+#cart_items_holder{
+    align-items: center;
+    margin-top: 100px;
+    background-color: white;
+    box-shadow: 2px 2px 10px #cac9c9;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.item_column{
+    border-left: none;
+}
+
+table,  td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #c6c6c6;
+}
+
+table{
+    width: 101%;
+    border: none;
+}
+
+.item_column{
+    height: 40px;
+    margin-left: 10px;
+    text-align: left;
+    border: 1px solid #c6c6c6;
+}
+
+.info_column{
+    text-align: left;
+    padding-left: 10px;
+}
+
+.total_column{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: right;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+td{
+    vertical-align: middle;
+}
+
+th{
+    background-color: #99ccff;
+    font-weight: bold;
+}
+
+.header_info{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.remove_button{
+    text-align: center;
+
+}
+
+.delete_button{
+    text-align: center;
+    width: 20px;
+    font-size: 25px;
+    background-color: transparent;
+    border: none;
+    color: #3399cc;
+}
+
+.delete_button:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.delete_button:hover{
+    transform: scale(1.2);
+}
+
+#item_holder{
+    column-width: 200px;
+}
+
+#checkOutButton{
+    margin-top: 10px;
+    float: right;
+    height: 40px;
+    width: 150px;
+    background-color: #04bad2;
+    color: white;
+    border: 1px solid #04bad2;
+    margin-bottom: -1px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px #cac9c9;
+}
+
+#thumbnailHolder{
+    border-radius: 50px;
+    border: 1px solid #c6c6c6;
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+
+
+.item{
+    width: 100px;
+    display: inline;
+}
+
+#cart-empty {
+    margin-top: 50px;
+    font-size: 30px;
+    text-align: center;
+}

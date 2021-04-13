@@ -109,8 +109,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
 
 <section>
 
+    <h3>Shipping information</h3>
+
     <div id="container">
-        <h3>Shipping information</h3>
+
 
         <div id="shipping_container">
 
@@ -127,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
                     </div>
 
                     <div class="field_container">
-                        <label for="city1">City</label><br>
+                        <label for="city1">Municipality/City</label><br>
                         <input type="text" name="city1" required><br>
                     </div>
 
@@ -149,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
                         <input type="text" name="address2"><br>
                     </div>
                     <div class="field_container">
-                        <label for="city2">City</label><br>
+                        <label for="city2">Municipality/City</label><br>
                         <input type="text" name="city2"><br>
                     </div>
 
@@ -170,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
                         <input type="text" name="address3"><br>
                     </div>
                     <div class="field_container">
-                        <label for="city3">City</label><br>
+                        <label for="city3">Municipality/City</label><br>
                         <input type="text" name="city3"><br>
                     </div>
 
@@ -182,9 +184,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
                     <div class="field_container">
                         <label for="country3">Country</label><br>
                         <input type="text" name="country3"><br>
+                        <button class="continueButton" id="continue_button" type="submit" name="continueButton">Continue</button>
                     </div>
                 </div>
-                <button id="continue_button" type="submit" name="continueButton">Continue</button>
+
             </form>
 
         </div>

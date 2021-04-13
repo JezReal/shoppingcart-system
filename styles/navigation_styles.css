@@ -1,8 +1,10 @@
 nav{
-    padding-left: 10px;
+    width: 94%;
+    margin-left: 20px;
+    margin-right: 20px;
     padding-right: 10px;
     height: 5%;
-    top: 10px;
+    top: 20px;
     overflow: hidden;
     position: fixed; /* Set the navbar to fixed position */
     align-items: center;
@@ -14,4 +16,5 @@ nav{
 nav button{
     background-color: transparent;
     border: none;
+    font-size: 16px;
 }

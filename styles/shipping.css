@@ -4,21 +4,28 @@ body{
     padding: 20px;
 }
 
+section{
+    margin-top: 100px;
+}
+
 #container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    width: 87%;
     margin-left: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px #cac9c9;
 }
 
 #shipping_container {
-    margin-top: 50px;
     horiz-align: center;
 }
 
 h3 {
     margin-top: 50px;
     font-size: 30px;
+    margin-left: 50px;
 }
 
 .address_container {
@@ -30,17 +37,44 @@ h3 {
 
 #continue_button {
     margin-top: 15px;
+
 }
 
 label {
     margin-bottom: 20px;
+    margin-left: 17px;
 }
 
-input {
-    margin-top: 3px;
-}
 
 form {
     position: center;
+}
+
+input {
+    padding-right: 10px;
+    padding-left: 10px;
+    height: 35px;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #c6c6c6;
+    border-radius: 20px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    position: center;
+}
+
+input:focus{
+    outline: none;
+}
+
+.continueButton {
+    float: right;
+    height: 40px;
+    width: 320px;
+    background-color: #04bad2;
+    border: 1px solid #04bad2;
+    border-radius: 20px;
+    color: white;
+
 }
 

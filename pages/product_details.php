@@ -121,29 +121,36 @@ if (isset($_SESSION['user_id'])) {
 
     if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
 
-        $productQuantity = $_POST['quantityField'];
-        $userID = $_SESSION['user_id'];
-        $productID = $_POST['addToCartButton'];
-        $cartID = getCartID($userID);
-        $cartItemID = getCartItemId($userID);
-
-
-        if (customerHasCart($userID)) {
-
-            if (cartItemExist($userID, $productID)) {
-                editItemQuantity($productQuantity, $productID, $userID);
-            } else {
-                insertToCartItems($cartID, $productID, $productQuantity);
-            }
-
-        } else {
-            insertToCarts($userID);
+            $productQuantity = $_POST['quantityField'];
+            $userID = $_SESSION['user_id'];
+            $productID = $_POST['addToCartButton'];
             $cartID = getCartID($userID);
-            insertToCartItems($cartID, $productID, 1);
-        }
-        header('location: cart.php');
+            $cartItemID = getCartItemId($userID);
+
+
+            if (customerHasCart($userID)) {
+
+                if (cartItemExist($userID, $productID)) {
+                    editItemQuantity($productQuantity, $productID, $userID);
+                } else {
+                    insertToCartItems($cartID, $productID, $productQuantity);
+                }
+
+            } else {
+                insertToCarts($userID);
+                $cartID = getCartID($userID);
+                insertToCartItems($cartID, $productID, 1);
+            }
+            header('location: cart.php');
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton']) and !isset($_SESSION['user_id'])) {
+
+    header('location: login.php');
+
+}
+
 
 ?>
 

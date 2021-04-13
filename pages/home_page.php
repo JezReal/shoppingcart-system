@@ -137,6 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
         $cartID = getCartID($userID);
         insertToCartItems($cartID, $productID, 1);
     }
+
     header('location: cart.php');
 }
 ?>

@@ -153,10 +153,10 @@ $statement->execute();
             ?>
 
             <tr>
-                <td class="item_column"></td>
-                <td class="info_column"><?php echo 'total quantity: ' . $totalQuantity . " pcs." ?></td>
-                <td class="info_column"></td>
-                <td class="info_column"><?php echo 'sub total: ' . "₱ " . number_format($totalPrice, 2) ?></td>
+                <td id="total_column" class="item_column"></td>
+                <td id="total_column" class="info_column"><?php echo 'total quantity: ' . $totalQuantity . " pcs." ?></td>
+                <td id="total_column" class="info_column"></td>
+                <td id="total_column" class="info_column"><?php echo 'sub total: ' . "₱ " . number_format($totalPrice, 2) ?></td>
             </tr>
 
             <?php
@@ -165,17 +165,17 @@ $statement->execute();
                 $grandTotal = $shippingFee + $totalPrice;
 
                 echo '<tr>';
-                echo '<td class="item_column"></td>';
-                echo '<td class="info_column">' . 'shipping fee: ' . "₱ " . number_format($shippingFee, 2) . '</td>';
-                echo '<td class="info_column"></td>';
-                echo '<td class="info_column">' . 'grand total: ' . "₱ " . number_format($grandTotal, 2) . '</td>';
+                echo '<td id="total_column" class="item_column"></td>';
+                echo '<td id="total_column" class="info_column">' . 'shipping fee: ' . "₱ " . number_format($shippingFee, 2) . '</td>';
+                echo '<td id="total_column" class="info_column"></td>';
+                echo '<td id="total_column" class="info_column">' . 'grand total: ' . "₱ " . number_format($grandTotal, 2) . '</td>';
                 echo '</tr>';
             } else {
                 echo '<tr>';
-                echo '<td class="item_column"></td>';
-                echo '<td class="info_column">' . 'shipping fee: ---- ' . '</td>';
-                echo '<td class="info_column"></td>';
-                echo '<td class="info_column">' . 'grand total: ---- ' . '</td>';
+                echo '<td id="total_column" class="item_column"></td>';
+                echo '<td id="total_column" class="info_column">' . 'shipping fee: ---- ' . '</td>';
+                echo '<td id="total_column" class="info_column"></td>';
+                echo '<td id="total_column" class="info_column">' . 'grand total: ---- ' . '</td>';
                 echo '</tr>';
             }
 

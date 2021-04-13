@@ -50,11 +50,17 @@ table{
 }
 
 .total_column{
+
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: right;
     padding-right: 10px;
     font-weight: bold;
+
+}
+#total_column{
+    border-right: none;
+    border-left: none;
 }
 
 td{
