@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['checkOutButton'])) {
 
     $database = connect();
 
-    $jobOrderId = getJobOrderId();
     $cartID = getCartID();
 
     $query = $database->prepare("INSERT INTO job_orders (customer_id) VALUES(:customerID)");
@@ -18,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['checkOutButton'])) {
     $items = $database->prepare("SELECT product_id FROM cart_items WHERE cart_id=:cartId");
     $items->bindParam("cartId", $cartID);
     $items->execute();
+
+    $jobOrderId = getJobOrderId();
 
     while ($item = $items->fetch(PDO::FETCH_ASSOC)) {
         $currentItem = $item['product_id'];
@@ -50,6 +51,7 @@ function getJobOrderId()
 }
 
 function getCartId() {
+
     $database = connect();
 
     $cartId = $database->prepare("SELECT cart_id FROM carts WHERE customer_id=:customerId");
