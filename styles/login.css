@@ -44,13 +44,17 @@ input:focus{
     outline: none;
 }
 
-button {
+button{
     height: 40px;
     width: 320px;
     background-color: #04bad2;
     border: 1px solid #04bad2;
     border-radius: 20px;
     color: white;
+}
 
+#error-message{
+    margin-top: 20px;
+    color: #d00000;
 }
 

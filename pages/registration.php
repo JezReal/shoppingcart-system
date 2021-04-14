@@ -56,11 +56,11 @@ unset($_SESSION["login_error_message"]);
 <section>
     <?php
     if (isset($_SESSION["emailExists"])) {
-        echo "<p>Email already exists!</p>";
+        echo "<p class='error-message'>Email already exists!</p>";
     }
 
     if (isset($_SESSION["passwordMismatch"])) {
-        echo "<p>Password does not match!</p>";
+        echo "<p class='error-message'>Password does not match!</p>";
     }
 
     ?>

@@ -5,9 +5,6 @@ body{
 }
 
 section {
-
-
-
     width: 400px;
     height: 70vh;
     margin-top: 120px;
@@ -52,6 +49,9 @@ button {
     border: 1px solid #04bad2;
     border-radius: 20px;
     color: white;
+}
 
+.error-message{
+    margin-top: 10px;
 }
 

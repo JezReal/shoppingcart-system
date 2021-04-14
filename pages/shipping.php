@@ -25,7 +25,6 @@ function getWeightLimit(){
     }
 
     return $weight;
-
 }
 
 
@@ -34,27 +33,31 @@ function getShippingPrice($totalWeight)
 
     $limit=getWeightLimit();
 
-    do{
-        require_once("../database/database.php");
+    if($totalWeight>$limit){
 
-        if($totalWeight>$limit){
-            $tempWeight=$limit;
-            $totalWeight-=$limit;
-        }else{
-            $tempWeight=$totalWeight;
-        }
+        do{
+            require_once("../database/database.php");
 
-        $pdo = connect();
-        $selectShippingID = "SELECT price FROM shipping WHERE '$tempWeight' BETWEEN min_weight AND max_weight";
-        $statement = $pdo->prepare($selectShippingID);
-        $statement->execute();
+            if($totalWeight>$limit){
+                $tempWeight=$limit;
+                $totalWeight-=$limit;
+            }else{
+                $tempWeight=$totalWeight;
+            }
 
-        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            $result+=$row['price'];
-            echo $row['price'];
-        }
+            $pdo = connect();
+            $selectShippingID = "SELECT price FROM shipping WHERE '$tempWeight' BETWEEN min_weight AND max_weight";
+            $statement = $pdo->prepare($selectShippingID);
+            $statement->execute();
 
-    }while($totalWeight>$limit);
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $result+=$row['price'];
+                echo $row['price'];
+            }
+
+        }while($totalWeight>$limit);
+
+    }
 
     $pdo = connect();
     $selectShippingID = "SELECT price FROM shipping WHERE '$totalWeight' BETWEEN min_weight AND max_weight";
@@ -65,9 +68,7 @@ function getShippingPrice($totalWeight)
         $result+=$row['price'];
         echo $row['price'];
     }
-
         return $result;
-
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
