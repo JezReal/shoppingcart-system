@@ -217,11 +217,6 @@ $statement->execute();
                     <button type="submit" name="viewDetailsButton" value="' . $row["product_id"] . '">View Details</button>
                   </form>';
 
-            if (isset($_SESSION["user_id"])) {
-                echo '<form action="home_page.php" method="post">
-                    <button type="submit" name="addToCartButton" value="' . $row["product_id"] . '">Add to Cart</button>
-                  </form>';
-            }
             echo '</div>';
             echo "</div>";
         }
