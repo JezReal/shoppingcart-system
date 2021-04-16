@@ -9,9 +9,10 @@ function logout()
     header("Location: ./home_page.php");
 }
 
-function getWeightLimit(){
+function getWeightLimit()
+{
 
-    $weight=0;
+    $weight = 0;
 
     require_once("../database/database.php");
 
@@ -31,18 +32,18 @@ function getWeightLimit(){
 function getShippingPrice($totalWeight)
 {
 
-    $limit=getWeightLimit();
+    $limit = getWeightLimit();
 
-    if($totalWeight>$limit){
+    if ($totalWeight > $limit) {
 
-        do{
+        do {
             require_once("../database/database.php");
 
-            if($totalWeight>$limit){
-                $tempWeight=$limit;
-                $totalWeight-=$limit;
-            }else{
-                $tempWeight=$totalWeight;
+            if ($totalWeight > $limit) {
+                $tempWeight = $limit;
+                $totalWeight -= $limit;
+            } else {
+                $tempWeight = $totalWeight;
             }
 
             $pdo = connect();
@@ -51,11 +52,11 @@ function getShippingPrice($totalWeight)
             $statement->execute();
 
             while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-                $result+=$row['price'];
+                $result += $row['price'];
                 echo $row['price'];
             }
 
-        }while($totalWeight>$limit);
+        } while ($totalWeight > $limit);
 
     }
 
@@ -65,10 +66,10 @@ function getShippingPrice($totalWeight)
     $statement->execute();
 
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-        $result+=$row['price'];
+        $result += $row['price'];
         echo $row['price'];
     }
-        return $result;
+    return $result;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logoutButton"])) {
@@ -79,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
 
     $totalWeight = $_SESSION['total_weight'];
 
-    $_SESSION['weight_limit']=getWeightLimit();
+    $_SESSION['weight_limit'] = getWeightLimit();
 
     $_SESSION['shipping_fee'] = getShippingPrice($totalWeight);
     $_SESSION['shippingFullName'] = $_POST['fullName'];
@@ -88,20 +89,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
     $_SESSION['province'] = $_POST['province1'];
     $_SESSION['country'] = $_POST['country1'];
 
-    if($_POST['address2']!=''){
+    if ($_POST['address2'] != '') {
         $_SESSION['address2'] = $_POST['address2'];
         $_SESSION['city2'] = $_POST['city2'];
         $_SESSION['province2'] = $_POST['province2'];
         $_SESSION['country2'] = $_POST['country2'];
     }
 
-    if($_POST['address3']!=''){
+    if ($_POST['address3'] != '') {
         $_SESSION['address3'] = $_POST['address3'];
         $_SESSION['city3'] = $_POST['city3'];
         $_SESSION['province3'] = $_POST['province3'];
         $_SESSION['country3'] = $_POST['country3'];
     }
-
 
 
     header("location: payment.php");
@@ -233,7 +233,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['continueButton'])) {
                     <div class="field_container">
                         <label for="country3">Country</label><br>
                         <input type="text" name="country3"><br>
-                        <button class="continueButton" id="continue_button" type="submit" name="continueButton">Continue</button>
+                        <button class="continueButton" id="continue_button" type="submit" name="continueButton">
+                            Continue
+                        </button>
                     </div>
                 </div>
 
