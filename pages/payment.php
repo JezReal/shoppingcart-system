@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['checkOutButton'])) {
 
     $cartID = getCartID();
 
+    deductFromStock($cartID);
+
     $query = $database->prepare("INSERT INTO job_orders (customer_id) VALUES(:customerID)");
     $query->bindParam("customerID", $customerID);
     $query->execute();
@@ -50,7 +52,8 @@ function getJobOrderId()
     return false;
 }
 
-function getCartId() {
+function getCartId()
+{
 
     $database = connect();
 
@@ -65,6 +68,41 @@ function getCartId() {
     }
 
     return false;
+}
+
+function deductFromStock($cartId)
+{
+    $database = connect();
+
+    $query = $database->prepare("SELECT product_id, quantity FROM cart_items WHERE cart_id=:cartId");
+    $query->bindParam("cartId", $cartId);
+    $query->execute();
+
+    while ($item = $query->fetch(PDO::FETCH_ASSOC)) {
+        $currentId = $item['product_id'];
+        $currentQuantity = $item['quantity'];
+
+        $stockQuantity = 0;
+
+        $quantityQuery = $database->prepare("SELECT product_stock from products WHERE product_id=:currentId");
+        $quantityQuery->bindParam("currentId", $currentId);
+        $quantityQuery->execute();
+
+        if ($quantityQuery->rowCount() > 0) {
+            $quantityResult = $quantityQuery->fetch(PDO::FETCH_OBJ);
+
+            $stockQuantity = $quantityResult->product_stock;
+        }
+
+        $difference = $stockQuantity - $currentQuantity;
+
+        $stockQuery = $database->prepare("UPDATE products SET product_stock=:newStock WHERE product_id=:productId");
+        $stockQuery->bindParam("newStock", $difference);
+        $stockQuery->bindParam("productId", $currentId);
+        $stockQuery->execute();
+
+    }
+
 }
 
 ?>
@@ -173,9 +211,11 @@ $statement->execute();
 
             <tr>
                 <td id="total_column" class="item_column"></td>
-                <td id="total_column" class="info_column"><?php echo 'total quantity: ' . $totalQuantity . " pcs." ?></td>
+                <td id="total_column"
+                    class="info_column"><?php echo 'total quantity: ' . $totalQuantity . " pcs." ?></td>
                 <td id="total_column" class="info_column"></td>
-                <td id="total_column" class="info_column"><?php echo 'sub total: ' . "₱ " . number_format($totalPrice, 2) ?></td>
+                <td id="total_column"
+                    class="info_column"><?php echo 'sub total: ' . "₱ " . number_format($totalPrice, 2) ?></td>
             </tr>
 
             <?php
