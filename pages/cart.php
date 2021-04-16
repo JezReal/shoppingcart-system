@@ -3,7 +3,6 @@
 session_start();
 
 
-
 require_once("../database/database.php");
 
 $database = connect();
@@ -45,14 +44,16 @@ function deleteCartItem($productID, $costumerID)
                         WHERE cart_items.product_id = '$productID' AND carts.customer_id='$costumerID'";
     $statement = $pdo->prepare($editItemQuantity);
     $statement->execute();
+
+    header("Location: cart.php");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['minusItemButton'])) {
 
-    minusItemQuantity($_POST['minusItemButton'],$_SESSION['user_id']);
+    minusItemQuantity($_POST['minusItemButton'], $_SESSION['user_id']);
 
-    if($_POST['lastQuantity']<=1){
-        deleteCartItem($_POST['minusItemButton'],$_SESSION['user_id']);
+    if ($_POST['lastQuantity'] <= 1) {
+        deleteCartItem($_POST['minusItemButton'], $_SESSION['user_id']);
     }
 }
 
@@ -60,13 +61,13 @@ unset($_POST['minusItemButton']);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['plusItemButton'])) {
 
-    plusItemQuantity($_POST['plusItemButton'],$_SESSION['user_id']);
+    plusItemQuantity($_POST['plusItemButton'], $_SESSION['user_id']);
 }
 unset($_POST['plusItemButton']);
 
 if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['deleteFromCartButton'])) {
 
-    deleteCartItem($_POST['deleteFromCartButton'],$_SESSION['user_id']);
+    deleteCartItem($_POST['deleteFromCartButton'], $_SESSION['user_id']);
 }
 unset($_POST['deleteFromCartButton']);
 
@@ -134,6 +135,72 @@ $statement->execute();
 ?>
 
 <section>
+
+    <?php
+    function getWeightLimit()
+    {
+
+        $weight = 0;
+
+        require_once("../database/database.php");
+
+        $pdo = connect();
+        $selectShippingID = "SELECT max_weight FROM shipping";
+        $statement = $pdo->prepare($selectShippingID);
+        $statement->execute();
+
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $weight = $row['max_weight'];
+        }
+
+        return $weight;
+    }
+
+    function getShippingPrice($totalWeight)
+    {
+        $limit = getWeightLimit();
+
+        if ($totalWeight > $limit) {
+            $result = 0;
+
+            do {
+                require_once("../database/database.php");
+
+                if ($totalWeight > $limit) {
+                    $tempWeight = $limit;
+                    $totalWeight -= $limit;
+                } else {
+                    $tempWeight = $totalWeight;
+                }
+
+                $pdo = connect();
+                $selectShippingID = "SELECT price FROM shipping WHERE '$tempWeight' BETWEEN min_weight AND max_weight";
+                $statement = $pdo->prepare($selectShippingID);
+                $statement->execute();
+
+                while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                    $result += $row['price'];
+                }
+
+            } while ($totalWeight > $limit);
+
+        }
+        $result = 0;
+
+        $pdo = connect();
+        $selectShippingID = "SELECT price FROM shipping WHERE '$totalWeight' BETWEEN min_weight AND max_weight";
+        $statement = $pdo->prepare($selectShippingID);
+        $statement->execute();
+
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $result += $row['price'];
+        }
+        return $result;
+    }
+
+
+
+    ?>
     <?php
     if ($query->rowCount() == 0) {
         ?>
@@ -179,7 +246,7 @@ $statement->execute();
                     echo '<td class="info_column">' . "₱ " . number_format($price, 2) . '</td>';
                     echo '<td class="remove_button">
                              <form action="cart.php" method="post">
-                             <input type="hidden" name="lastQuantity" value="'.$quantity.'">
+                             <input type="hidden" name="lastQuantity" value="' . $quantity . '">
                              <button class="delete_button" type="submit" name="plusItemButton" value="' . $row['product_id'] . '">+</button>
                              <button class="delete_button" type="submit" name="minusItemButton" value="' . $row['product_id'] . '">-</button>
                              <button class="delete_button" type="submit" name="deleteFromCartButton" value="' . $row['product_id'] . '"><img src="../icons/remove%20icon.png"></button>
@@ -189,13 +256,16 @@ $statement->execute();
                 }
 
                 $_SESSION['total_weight'] = $totalWeight;
+                $_SESSION['shipping_fee'] = getShippingPrice($_SESSION['total_weight']);
                 ?>
 
                 <tr>
                     <td id="total_column" class="item_column"></td>
-                    <td id="total_column" class="info_column"><?php echo 'total quantity: ' . $totalQuantity . " pcs." ?></td>
+                    <td id="total_column"
+                        class="info_column"><?php echo 'total quantity: ' . $totalQuantity . " pcs." ?></td>
                     <td id="total_column" class="info_column"></td>
-                    <td id="total_column" class="info_column"><?php echo 'sub total: ' . "₱ " . number_format($totalPrice, 2) ?></td>
+                    <td id="total_column"
+                        class="info_column"><?php echo 'sub total: ' . "₱ " . number_format($totalPrice, 2) ?></td>
                     <td id="total_column" class="info_column"></td>
                 </tr>
 
