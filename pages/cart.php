@@ -158,6 +158,7 @@ $statement->execute();
 
     function getShippingPrice($totalWeight)
     {
+        $result = 0;
         $limit = getWeightLimit();
 
         if ($totalWeight > $limit) {
@@ -185,7 +186,7 @@ $statement->execute();
             } while ($totalWeight > $limit);
 
         }
-        $result = 0;
+
 
         $pdo = connect();
         $selectShippingID = "SELECT price FROM shipping WHERE '$totalWeight' BETWEEN min_weight AND max_weight";
@@ -256,7 +257,7 @@ $statement->execute();
                 }
 
                 $_SESSION['total_weight'] = $totalWeight;
-                $_SESSION['shipping_fee'] = getShippingPrice($_SESSION['total_weight']);
+                $_SESSION['shipping_fee'] = getShippingPrice($totalWeight);
                 ?>
 
                 <tr>
