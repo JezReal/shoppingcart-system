@@ -121,27 +121,27 @@ if (isset($_SESSION['user_id'])) {
 
     if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['addToCartButton'])) {
 
-            $productQuantity = $_POST['quantityField'];
-            $userID = $_SESSION['user_id'];
-            $productID = $_POST['addToCartButton'];
-            $cartID = getCartID($userID);
-            $cartItemID = getCartItemId($userID);
+        $productQuantity = $_POST['quantityField'];
+        $userID = $_SESSION['user_id'];
+        $productID = $_POST['addToCartButton'];
+        $cartID = getCartID($userID);
+        $cartItemID = getCartItemId($userID);
 
 
-            if (customerHasCart($userID)) {
+        if (customerHasCart($userID)) {
 
-                if (cartItemExist($userID, $productID)) {
-                    editItemQuantity($productQuantity, $productID, $userID);
-                } else {
-                    insertToCartItems($cartID, $productID, $productQuantity);
-                }
-
+            if (cartItemExist($userID, $productID)) {
+                editItemQuantity($productQuantity, $productID, $userID);
             } else {
-                insertToCarts($userID);
-                $cartID = getCartID($userID);
-                insertToCartItems($cartID, $productID, 1);
+                insertToCartItems($cartID, $productID, $productQuantity);
             }
-            header('location: cart.php');
+
+        } else {
+            insertToCarts($userID);
+            $cartID = getCartID($userID);
+            insertToCartItems($cartID, $productID, 1);
+        }
+        header('location: cart.php');
     }
 }
 
@@ -220,19 +220,19 @@ $statement->execute();
         <?php
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 
-            $quantityLabel='';
-            $weightLabel='';
+            $quantityLabel = '';
+            $weightLabel = '';
 
-            if($row['product_stock']<=1){
-                $quantityLabel='pc.';
-            }else{
-                $quantityLabel='pcs';
+            if ($row['product_stock'] == 1) {
+                $quantityLabel = 'pc.';
+            } else {
+                $quantityLabel = 'pcs';
             }
 
-            if($row['product_weight']<=1){
-                $weightLabel='kg.';
-            }else{
-                $weightLabel='kgs';
+            if ($row['product_weight'] <= 1) {
+                $weightLabel = 'kg.';
+            } else {
+                $weightLabel = 'kgs';
             }
 
             echo "<div id='image-container'>";
@@ -243,16 +243,23 @@ $statement->execute();
             echo '<h3>' . $row['product_name'] . '</h3>';
             echo '<p id="product-description">' . $row['product_description'] . '</p>';
             echo '<p class="generic-text">' . "₱ " . number_format($row['product_price'], 2) . '</p>';
-            echo '<p class="generic-text">' . "Stock: " . $row['product_stock'] ." ".$quantityLabel.'</p>';
-            echo '<p class="generic-text">' . "Weight: " . $row['product_weight'] ." ".$weightLabel.'</p>';
+            if ($row['product_stock'] == 0) {
+                echo '<p class="generic-text">Out of stock</p>';
+            } else {
+                echo '<p class="generic-text">' . "Stock: " . $row['product_stock'] . " " . $quantityLabel . '</p>';
+            }
+
+            echo '<p class="generic-text">' . "Weight: " . $row['product_weight'] . " " . $weightLabel . '</p>';
 
             //set the product id in the url using get
             echo '<form action="product_details.php" method="post">';
-            echo '<p id="quantity-input">Quantity: </p>';
-            echo '<input class="generic-text" type="number" name="quantityField" value="1" max=' . $row["product_stock"] . ' >';
-            echo '<br/>';
-            echo '<button type="submit" name="addToCartButton" value="' . $row["product_id"] . '">Add to Cart</button>';
-            echo '</form>';
+            if (!$row['product_stock'] == 0) {
+                echo '<p id="quantity-input">Quantity: </p>';
+                echo '<input class="generic-text" type="number" name="quantityField" value="1" max=' . $row["product_stock"] . ' >';
+                echo '<br/>';
+                echo '<button type="submit" name="addToCartButton" value="' . $row["product_id"] . '">Add to Cart</button>';
+                echo '</form>';
+            }
             echo "</div>";
         }
         ?>
